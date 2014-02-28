@@ -1,4 +1,4 @@
-package com.pro.judostalker;
+package com.pro.judostalker.controller;
 
 
 import java.sql.SQLException;

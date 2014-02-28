@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.pro.judostalker;
+package com.pro.judostalker.controller;
 
 import com.pro.judostalker.model.Judoka;
 import org.springframework.web.bind.annotation.RequestMapping;

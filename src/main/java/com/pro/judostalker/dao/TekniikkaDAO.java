@@ -38,28 +38,50 @@ public class TekniikkaDAO extends DBYhdistaja {
         PreparedStatement prepareStatement = yhteys.prepareStatement("SELECT * FROM Tekniikka WHERE id = ?");
         prepareStatement.setInt(1, id);
         ResultSet tulos = prepareStatement.executeQuery();
+        tulos.next();
+        yhteys.close();
         return luoTekniikkaOlio(tulos);
     }
 
     public void paivitaTekniikka(Tekniikka tekniikka) throws SQLException {
+        Connection yhteys = yhdista();
+        PreparedStatement prepareStatement = yhteys.prepareStatement("UPDATE Tekniikka SET nimi = ? WHERE  id = ?");
+        prepareStatement.setString(1, tekniikka.getNimi());
+        prepareStatement.setInt(2, tekniikka.getID());
+        prepareStatement.execute();
+        yhteys.close();
     }
 
-    public void poistaTekniikka(Tekniikka tekniikka) throws SQLException {
+    public void poistaTekniikka(int id) throws SQLException {
         Connection yhteys = yhdista();
         PreparedStatement prepareStatement = yhteys.prepareStatement("DELETE FROM Tekniikka WHERE id = ?");
-        prepareStatement.setInt(1, tekniikka.getID());
+        prepareStatement.setInt(1, id);
         ResultSet tulos = prepareStatement.executeQuery();
+        yhteys.close();
+
     }
 
-    public ArrayList<Judoka> haeKaikkiTekniikat() {
-        return null;
+    public ArrayList<Tekniikka> haeKaikkiTekniikat() throws SQLException {
+        Connection yhteys = yhdista();
+        ArrayList<Tekniikka> tekniikat = new ArrayList<Tekniikka>();
+        PreparedStatement prepareStatement = yhteys.prepareStatement("SELECT * FROM Tekniikka");
+        if (prepareStatement.execute()) {
+            ResultSet tulokset = prepareStatement.getResultSet();
+
+            while (tulokset.next()) {
+                tekniikat.add(luoTekniikkaOlio(tulokset));
+            }
+        }
+        yhteys.close();
+
+        return tekniikat;
     }
 
     private Tekniikka luoTekniikkaOlio(ResultSet tulos) throws SQLException {
         Tekniikka tekniikka = new Tekniikka();
-        if (tulos.next()) {
-            tekniikka.setNimi(tulos.getString("nimi"));
-        }
+        tekniikka.setNimi(tulos.getString("nimi"));
+        tekniikka.setID(tulos.getInt("id"));
+
         return tekniikka;
 
     }

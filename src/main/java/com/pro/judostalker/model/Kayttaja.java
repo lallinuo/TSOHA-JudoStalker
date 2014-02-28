@@ -55,4 +55,5 @@ public class Kayttaja {
     public void setSukunimi(String sukunimi) {
         this.sukunimi = sukunimi;
     }
+    
 }
