@@ -6,6 +6,7 @@ package com.pro.judostalker.controller;
 
 import com.pro.judostalker.dao.KayttajaDAO;
 import com.pro.judostalker.model.Kayttaja;
+import com.pro.judostalker.model.Kirjautuminen;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,15 @@ public class KayttajaController {
     @RequestMapping(value = "/kayttaja", method = RequestMethod.POST, headers = {"Content-type=application/json"})
     public void lisaaKayttaja(@RequestBody Kayttaja kayttaja) throws SQLException {
         kayttajaDAO.lisaaKayttaja(kayttaja);
+    }
+    
+    @RequestMapping(value = "/kirjaudu", method = RequestMethod.POST)
+    public void kirjaudu(@RequestBody Kirjautuminen kirjautuminen) throws SQLException{
+        if(kayttajaDAO.kirjaudu(kirjautuminen.getKayttajanimi(), kirjautuminen.getSalasana())){
+            System.out.println("Kirjauduttud");
+        }else{
+            System.out.println("väärä passu");
+        }
     }
 
     @RequestMapping(value = "/kayttaja/{id}", method = RequestMethod.GET)

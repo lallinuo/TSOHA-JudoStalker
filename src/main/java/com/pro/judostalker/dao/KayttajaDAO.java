@@ -26,23 +26,26 @@ public class KayttajaDAO extends DBYhdistaja {
 
     public void lisaaKayttaja(Kayttaja kayttaja) throws SQLException {
         Connection yhteys = yhdista();
-        PreparedStatement prepareStatement = yhteys.prepareStatement("INSERT INTO Kayttaja(kayttajanimi, password, etunimi, sukunimi) VALUES (?,?,?,?)");
+        PreparedStatement prepareStatement = yhteys.prepareStatement("INSERT INTO Kayttaja(kayttajanimi, salasana, etunimi, sukunimi) VALUES (?,?,?,?)");
 
         prepareStatement.setString(1, kayttaja.getKayttajanimi());
         prepareStatement.setString(2, kayttaja.getSalasana());
         prepareStatement.setString(3, kayttaja.getEtunimi());
-        prepareStatement.setString(3, kayttaja.getSukunimi());
+        prepareStatement.setString(4, kayttaja.getSukunimi());
         prepareStatement.execute();
         yhteys.close();
     }
-
-    public boolean kirjaudu(String username, String password) throws SQLException {
+    
+    //salasanaan tiiviste + suola 
+    public boolean kirjaudu(String kayttajanimi, String salasana) throws SQLException {
         Connection yhteys = yhdista();
         PreparedStatement prepareStatement = yhteys.prepareStatement("SELECT * FROM Kayttaja WHERE kayttajanimi = ? and password = ?");
+        prepareStatement.setString(1, kayttajanimi);
+        prepareStatement.setString(2, salasana);
         ResultSet tulos = prepareStatement.executeQuery();
         yhteys.close();
-        if (tulos.first()) {
-            return true; //pitää testata viel toimiiks tää näin
+        if(tulos.next()){
+            return true;
         }
         return false;
     }
@@ -53,13 +56,13 @@ public class KayttajaDAO extends DBYhdistaja {
         PreparedStatement prepareStatement = yhteys.prepareStatement("SELECT * FROM Kayttaja WHERE id = ?");
         prepareStatement.setInt(1, id);
         ResultSet tulos = prepareStatement.executeQuery();
-        System.out.println("njoo");
+        tulos.next();
         return luoKayttajaOlio(tulos);
     }
 
     public void paivitaKayttaja(Kayttaja kayttaja) throws SQLException {
         Connection yhteys = yhdista();
-        PreparedStatement prepareStatement = yhteys.prepareStatement("UPDATE Kayttaja SET kayttajanimi = ?, password = ?, etunimi = ?, sukunimi = ? where id = ?");
+        PreparedStatement prepareStatement = yhteys.prepareStatement("UPDATE Kayttaja SET kayttajanimi = ?, salasana = ?, etunimi = ?, sukunimi = ? where id = ?");
         prepareStatement.setString(1, kayttaja.getKayttajanimi());
         prepareStatement.setString(2, kayttaja.getSalasana());
         prepareStatement.setString(3, kayttaja.getEtunimi());
