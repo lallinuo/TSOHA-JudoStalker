@@ -3,6 +3,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <html>
     <head>
+        <meta charset="utf-8">
         <title>Home</title>
     </head>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" type="text/css" /> 
@@ -32,8 +33,8 @@
             <a href="TSOHA-JudoStalker/kayttaja/{{kayttaja.id}}">{{kayttaja.kayttajanimi}}</a>
             <a href="#" ng-click="logout()">Kirjaudu ulos</a>
             <a ui-sref="kayttajat">Käyttäjät</a>
-            <a ui-sref="state2">Judokat</a>
-            <a ui-sref="state3">Tekniikat</a>
+            <a ui-sref="judokat">Judokat</a>
+            <a ui-sref="tekniikat">Tekniikat</a>
         </div>
 
         <div ng-show="kirjautuminen">
