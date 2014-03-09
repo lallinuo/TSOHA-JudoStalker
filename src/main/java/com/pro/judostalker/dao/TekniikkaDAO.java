@@ -45,9 +45,8 @@ public class TekniikkaDAO extends DBYhdistaja {
 
     public void paivitaTekniikka(Tekniikka tekniikka) throws SQLException {
         Connection yhteys = yhdista();
-        PreparedStatement prepareStatement = yhteys.prepareStatement("UPDATE Tekniikka SET nimi = ? WHERE  id = ?");
+        PreparedStatement prepareStatement = yhteys.prepareStatement("UPDATE Tekniikka SET nimi = ? ");
         prepareStatement.setString(1, tekniikka.getNimi());
-        prepareStatement.setInt(2, tekniikka.getID());
         prepareStatement.execute();
         yhteys.close();
     }

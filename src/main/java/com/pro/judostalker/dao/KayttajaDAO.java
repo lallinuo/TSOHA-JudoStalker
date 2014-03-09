@@ -37,7 +37,7 @@ public class KayttajaDAO extends DBYhdistaja {
     }
     
     //salasanaan tiiviste + suola 
-    public boolean kirjaudu(String kayttajanimi, String salasana) throws SQLException {
+    public Kayttaja kirjaudu(String kayttajanimi, String salasana) throws SQLException {
         Connection yhteys = yhdista();
         PreparedStatement prepareStatement = yhteys.prepareStatement("SELECT * FROM Kayttaja WHERE kayttajanimi = ? and password = ?");
         prepareStatement.setString(1, kayttajanimi);
@@ -45,9 +45,9 @@ public class KayttajaDAO extends DBYhdistaja {
         ResultSet tulos = prepareStatement.executeQuery();
         yhteys.close();
         if(tulos.next()){
-            return true;
+            return luoKayttajaOlio(tulos);
         }
-        return false;
+        return null;
     }
 
     //nullin kaa probleemia

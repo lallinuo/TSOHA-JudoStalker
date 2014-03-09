@@ -9,6 +9,7 @@ import com.pro.judostalker.model.Kayttaja;
 import com.pro.judostalker.model.Kirjautuminen;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,27 +24,40 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 public class KayttajaController {
+
     @Autowired
     private KayttajaDAO kayttajaDAO;
-    @RequestMapping(value= "/kayttaja", method = RequestMethod.GET)
-    public @ResponseBody ArrayList<Kayttaja> haeKaikkiKayttajat() throws SQLException{
+
+    @RequestMapping(value = "/kayttaja", method = RequestMethod.GET)
+    public @ResponseBody
+    ArrayList<Kayttaja> haeKaikkiKayttajat() throws SQLException {
         return kayttajaDAO.haeKaikkiKayttajat();
-        
+
     }
+
     @RequestMapping(value = "/kayttaja", method = RequestMethod.POST, headers = {"Content-type=application/json"})
     public void lisaaKayttaja(@RequestBody Kayttaja kayttaja) throws SQLException {
         kayttajaDAO.lisaaKayttaja(kayttaja);
     }
-    
+
     @RequestMapping(value = "/kirjaudu", method = RequestMethod.POST)
-    public void kirjaudu(@RequestBody Kirjautuminen kirjautuminen) throws SQLException{
-        if(kayttajaDAO.kirjaudu(kirjautuminen.getKayttajanimi(), kirjautuminen.getSalasana())){
-            System.out.println("Kirjauduttud");
+    public @ResponseBody
+    Kayttaja kirjaudu(@RequestBody Kirjautuminen kirjautuminen, HttpSession session) throws SQLException {
+
+        Kayttaja kayttaja = kayttajaDAO.kirjaudu(kirjautuminen.getKayttajanimi(), kirjautuminen.getSalasana());
+        if (kayttaja == null) {
+            return null;
         }else{
-            System.out.println("väärä passu");
+            System.out.println("Attribute has been set");
+            session.setAttribute("kirjautunut", true);
+            return kayttaja;
         }
     }
 
+    @RequestMapping(value="/logout", method = RequestMethod.GET)
+    public @ResponseBody void kirjauduUlos(HttpSession session){
+        session.invalidate();
+    }
     @RequestMapping(value = "/kayttaja/{id}", method = RequestMethod.GET)
     public @ResponseBody
     Kayttaja haeKayttaja(@PathVariable int id) throws SQLException {
