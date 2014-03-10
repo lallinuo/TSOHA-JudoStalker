@@ -23,18 +23,21 @@ public class JudokaDAO extends DBYhdistaja {
         super();
     }
 
-    public void lisaaJudoka(Judoka judoka) throws SQLException {
+    public Judoka lisaaJudoka(Judoka judoka) throws SQLException {
         Connection yhteys = yhdista();
-        PreparedStatement prepareStatement = yhteys.prepareStatement("INSERT INTO judoka(judokanimi, salasana, etunimi, sukunimi) VALUES (?,?,?,?)");
-
+        PreparedStatement prepareStatement = yhteys.prepareStatement("INSERT INTO Judoka(etunimi, sukunimi, painoluokka, sukupuoli,maa) VALUES (?,?,?,?,?)");
         prepareStatement.setString(1, judoka.getEtunimi());
         prepareStatement.setString(2, judoka.getSukunimi());
         prepareStatement.setString(3, judoka.getPainoluokka());
         prepareStatement.setString(4, judoka.getSukupuoli());
-        prepareStatement.setString(5, judoka.getPainoluokka());
-        prepareStatement.executeQuery();
+        prepareStatement.setString(5, judoka.getMaa());
+        prepareStatement.execute();
+        prepareStatement = yhteys.prepareStatement("SELECT max(id) as max from Judoka");
+        ResultSet tulos = prepareStatement.executeQuery();
+        tulos.next();
+        judoka.setId(tulos.getInt("max"));
         yhteys.close();
-        
+        return judoka;
     }
 
     public Judoka haeJudoka(int id) throws SQLException {

@@ -39,7 +39,8 @@ public class JudokaController {
     }
 
     @RequestMapping(value = "/judoka/{id}", method = RequestMethod.GET)
-    public @ResponseBody Judoka haeJudoka(@PathVariable int id, HttpSession session) throws SQLException {
+    public @ResponseBody
+    Judoka haeJudoka(@PathVariable int id, HttpSession session) throws SQLException {
         if (session.getAttribute("kirjautunut") != null) {
             System.out.println("attribute found");
             return judokaDAO.haeJudoka(id);
@@ -51,8 +52,8 @@ public class JudokaController {
 
     @RequestMapping(value = "/judoka", method = RequestMethod.POST)
     public @ResponseBody
-    void lisaaJudoka(@RequestBody Judoka judoka) throws SQLException {
-        judokaDAO.lisaaJudoka(judoka);
+    Judoka lisaaJudoka(@RequestBody Judoka judoka) throws SQLException {
+        return judokaDAO.lisaaJudoka(judoka);
     }
 
     @RequestMapping(value = "/judoka", method = RequestMethod.PUT)
