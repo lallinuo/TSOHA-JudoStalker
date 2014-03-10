@@ -45,82 +45,80 @@ var judoStalkerControllers = angular.module('judoStalkerControllers', ['judoStal
 var judoStalkerServices = angular.module('judoStalkerService', ['ngResource']);
 
 judoStalkerServices.factory('Kayttaja', ['$resource', function($resource) {
-        return $resource('TSOHA-JudoStalker/kayttaja',{},{
+    return $resource('TSOHA-JudoStalker/kayttaja',{},{
         });
-    }]);
+}]);
 
 judoStalkerServices.factory('Judoka', ['$resource', function($resource) {
-        return $resource('TSOHA-JudoStalker/judoka/:id',{
-            id: "@id"
-        });
-    }]);
+    return $resource('TSOHA-JudoStalker/judoka/:id',{
+        id: "@id"
+    });
+}]);
 
 judoStalkerServices.factory('Tekniikka', ['$resource', function($resource) {
-        return $resource('TSOHA-JudoStalker/tekniikka',{},{});
-    }]);
+    return $resource('TSOHA-JudoStalker/tekniikka',{},{});
+}]);
 
 
 judoStalkerControllers.controller('loginCtrl', ["$scope", "$http", "Kayttaja","$resource", function($scope, $http, Kayttaja,$resource) {
     
    
 
-        $resource("TSOHA-JudoStalker/onKirjautunut").get(function(data){
-            $scope.kirjautuminen = data.kirjautunut;
-        })
+    $resource("TSOHA-JudoStalker/onKirjautunut").get(function(data){
+        $scope.kirjautuminen = data.kirjautunut;
+    })
  
-        $scope.logout = function() {
-            $http({
-                method: 'GET',
-                url: 'TSOHA-JudoStalker/logout'
-            }).success(function() {
-                $scope.kirjautuminen = false;
-            })
-        }
+    $scope.logout = function() {
+        $http({
+            method: 'GET',
+            url: 'TSOHA-JudoStalker/logout'
+        }).success(function() {
+            $scope.kirjautuminen = false;
+        })
+    }
 
-        $scope.submit = function() {
-            $http({
-                method: 'POST',
-                url: 'TSOHA-JudoStalker/kirjaudu',
-                data: $scope.login,
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }).success(function(data) {
-                if (data.id >= 0) {
-                    console.log(data);
-                    $scope.kayttaja = data;
-                    $scope.kirjautuminen = true;
-                } else {
-                    $scope.error = "V‰‰r‰ k‰ytt‰j‰tunnus tai salasana";
-                }
-            });
-        };
-    }]);
+    $scope.submit = function() {
+        $http({
+            method: 'POST',
+            url: 'TSOHA-JudoStalker/kirjaudu',
+            data: $scope.login,
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).success(function(data) {
+            if (data.id >= 0) {
+                console.log(data);
+                $scope.kayttaja = data;
+                $scope.kirjautuminen = true;
+            } else {
+                $scope.error = "V‰‰r‰ k‰ytt‰j‰tunnus tai salasana";
+            }
+        });
+    };
+}]);
     
 judoStalkerControllers.controller('judokatCtrl',["$scope","Judoka", function($scope,Judoka){
-        $scope.judokat = Judoka.query();
-    }]);
+    $scope.judokat = Judoka.query();
+}]);
 
 judoStalkerControllers.controller('judokaCtrl',["$scope","Judoka","$stateParams", function($scope,Judoka,$stateParams){
-        $scope.judoka = Judoka.get({},{
-            id: $stateParams.id
-        });
-    }]);
+    $scope.judoka = Judoka.get({},{
+        id: $stateParams.id
+    });
+}]);
 
 judoStalkerControllers.controller('uusiJudokaCtrl',["$scope","Judoka","$location","$rootScope", function($scope,Judoka,$location,$rootScope){
-        $scope.lisaaJudoka = function(){ 
-            Judoka.save(JSON.stringify($scope.form),function(data){
-                $rootScope.$apply(function(){
-                    $location.path("/judokat"); 
-                });
-            });
-        }
-    }]);
+    $scope.lisaaJudoka = function(){ 
+        Judoka.save(JSON.stringify($scope.form),function(data){
+            $location.path("/judokat/"+data.id)
+        });
+    }
+}]);
 
 judoStalkerControllers.controller('kayttajaCtrl',["$scope","Kayttaja", function($scope,Kayttaja){
-        $scope.kayttajat = Kayttaja.query();
-    }]);
+    $scope.kayttajat = Kayttaja.query();
+}]);
 
 judoStalkerControllers.controller('tekniikkaCtrl',["$scope","Tekniikka","$stateParams", function($scope,Tekniikka){
-        $scope.tekniikat = Tekniikka.query();
-    }]);
+    $scope.tekniikat = Tekniikka.query();
+}]);
