@@ -79,4 +79,28 @@ public class KommenttiDAO extends DBYhdistaja {
         kommentti.setKommentti(tulos.getString("kommentti"));
         return kommentti;
     }
+
+    public ArrayList<Kommentti> haeKaikkiJudokanKommentit(int judokaId) throws SQLException {
+        ArrayList<Kommentti> kommentit = new ArrayList<Kommentti>();
+        Connection yhteys = yhdista();
+        PreparedStatement prepareStatement = yhteys.prepareStatement("SELECT * FROM Kommentti WHERE kayttajaid = ?");
+        prepareStatement.setInt(1, judokaId);
+        ResultSet tulos = prepareStatement.executeQuery();
+        while (tulos.next()) {
+            kommentit.add(luoKommenttiOlio(tulos));
+        }
+        return kommentit;
+
+    }
+
+    public ArrayList<Kommentti> haeKaikkiKommentit() throws SQLException {
+        ArrayList<Kommentti> kommentit = new ArrayList<Kommentti>();
+        Connection yhteys = yhdista();
+        PreparedStatement prepareStatement = yhteys.prepareStatement("SELECT * FROM Kommentti");
+        ResultSet tulos = prepareStatement.executeQuery();
+        while (tulos.next()) {
+            kommentit.add(luoKommenttiOlio(tulos));
+        }
+        return kommentit;
+    }
 }

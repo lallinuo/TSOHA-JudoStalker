@@ -3,7 +3,31 @@ To change this template, choose Tools | Templates
 and open the template in the editor.
 -->
 <div id="judoka">
-    <h1>Nimi: {{judoka.etunimi}}</h1>
+    <h1>{{judoka.etunimi}} {{judoka.sukunimi}}</h1>
 </div>
+<p><b>Sukupuoli:</b> {{judoka.sukupuoli}}</p>
+<p><b>Maa:</b> {{judoka.maa}}</p>
+<p><b>Painoluokka:</b> {{judoka.painoluokka}}</p>
+<a class="pure-button" ui-sref="muokkaa_judokaa({id:judoka.id})">Muokkaa</a>
+<a class="pure-button" ng-click="poistaJudoka()">Poista</a>
+<hr/>
 
- <a class="pure-button" href="#">Poista</a>
+<form class="pure-form pure-form-aligned" ng-submit="kommentoi()">
+    <fieldset>
+        <div class="pure-control-group">
+            <textarea ng-model="kommentti.kommentti" type="text" rows="10" cols="60" placeholder="Lisää judokaan liittyvä huomio" required></textarea>
+        </div>
+
+
+
+        <div class="pure-controls">
+
+            <button type="submit" class="pure-button pure-button-primary">Lähetä</button>
+        </div>
+    </fieldset>
+</form>
+
+<div ng-repeat="kommentti in kommentit" class="kommentti">
+    <hr/>
+    {{kommentti.kommentti}} 
+</div>

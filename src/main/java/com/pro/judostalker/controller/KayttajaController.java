@@ -32,7 +32,6 @@ public class KayttajaController {
     public @ResponseBody
     ArrayList<Kayttaja> haeKaikkiKayttajat() throws SQLException {
         return kayttajaDAO.haeKaikkiKayttajat();
-
     }
 
     @RequestMapping(value = "/kayttaja", method = RequestMethod.POST, headers = {"Content-type=application/json"})
@@ -48,7 +47,7 @@ public class KayttajaController {
         if (kayttaja == null) {
             return null;
         } else {
-            session.setAttribute("kirjautunut", true);
+            session.setAttribute("kirjautunut", kayttaja.getId() + "");
             return kayttaja;
         }
     }
@@ -57,9 +56,9 @@ public class KayttajaController {
     @ResponseBody
     public String onKirjautunut(HttpSession session) {
         if (session.getAttribute("kirjautunut") != null) {
-            return "{\"kirjautunut\": true}";
+            return (String) session.getAttribute("kirjautunut");
         } else {
-            return "{\"kirjautunut\": false}";
+            return null;
         }
 
     }

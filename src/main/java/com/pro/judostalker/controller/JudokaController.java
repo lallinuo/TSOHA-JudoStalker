@@ -56,7 +56,7 @@ public class JudokaController {
         return judokaDAO.lisaaJudoka(judoka);
     }
 
-    @RequestMapping(value = "/judoka", method = RequestMethod.PUT)
+    @RequestMapping(value = "/judoka/{id}", method = RequestMethod.PUT)
     public @ResponseBody
     void paivitaJudoka(@RequestBody Judoka judoka) throws SQLException {
         judokaDAO.paivitaJudoka(judoka);

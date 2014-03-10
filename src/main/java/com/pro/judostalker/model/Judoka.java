@@ -4,11 +4,14 @@
  */
 package com.pro.judostalker.model;
 
+import com.sun.xml.internal.ws.util.StringUtils;
+
 /**
  *
  * @author Lalli
  */
 public class Judoka {
+
     private int id;
     private String etunimi;
     private String sukunimi;
@@ -29,6 +32,8 @@ public class Judoka {
     }
 
     public void setEtunimi(String etunimi) {
+
+        etunimi = StringUtils.capitalize(etunimi);
         this.etunimi = etunimi;
     }
 
@@ -37,6 +42,7 @@ public class Judoka {
     }
 
     public void setSukunimi(String sukunimi) {
+        sukunimi = StringUtils.capitalize(sukunimi);
         this.sukunimi = sukunimi;
     }
 
@@ -61,7 +67,7 @@ public class Judoka {
     }
 
     public void setMaa(String maa) {
+        maa = StringUtils.capitalize(maa);
         this.maa = maa;
     }
-    
 }

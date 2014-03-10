@@ -1,7 +1,28 @@
+
 <div id ="judokat">
     <h1>Judokat</h1>
-    <a class="pure-button" ui-sref="lisaajudoka">Lis‰‰ judoka</a><br/>
+   
+    <a class="pure-button" ui-sref="lisaajudoka" >Lis√§√§ judoka</a><br/><br/>
+     <input ng-model="query" placeholder="Haku">
+    <table class="pure-table pure-table-bordered">
+        <thead>
+            <tr>
+                <th><a href="" ng-click="predicate ='etunimi';reverse=!reverse">Etunimi</a></th>
+                <th><a href="" ng-click="predicate ='sukunimi';reverse=!reverse">Sukunimi</a></th>
+                <th><a href="" ng-click="predicate ='painoluokka';reverse=!reverse">Painoluokka</a></th>
+                <th><a href="" ng-click="predicate ='sukupuoli';reverse=!reverse">Sukupuoli</a></th>
+                <th><a href="" ng-click="predicate ='maa'">Maa</a></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="judoka in judokat | filter: query |orderBy:predicate">
+                <td><a ui-sref="judoka({id: judoka.id})">{{judoka.etunimi}}</a></td>
+                <td> {{judoka.sukunimi}}</td>
+                <td> {{judoka.painoluokka}}</td>
+                <td> {{judoka.sukupuoli}}</td>
+                <td>{{judoka.maa}}</td>
+            </tr>
+            </body>
+    </table>
 
-    <a ui-sref="judoka({id: judoka.id})" ng-repeat-start="judoka in judokat">{{judoka.id}} {{judoka.etunimi}} {{judoka.sukunimi}}</a><br ng-repeat-end/>
-    
 </div>

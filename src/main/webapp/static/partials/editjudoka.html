@@ -1,22 +1,22 @@
-<form class="pure-form pure-form-aligned" ng-submit="lisaaJudoka()">
+<form class="pure-form pure-form-aligned" ng-submit="edit()">
     <fieldset>
         <div class="pure-control-group">
             <label  for="name">Etunimi</label>
-            <input ng-model="form.etunimi"  type="text" placeholder="Etunimi" required>
+            <input ng-model="judoka.etunimi"  type="text" placeholder="Etunimi" required>
         </div>
 
         <div class="pure-control-group">
             <label >Sukunimi</label>
-            <input ng-model="form.sukunimi" type="text" placeholder="Sukunimi" required>
+            <input ng-model="judoka.sukunimi" type="text" placeholder="Sukunimi" required>
         </div>
 
         <div class="pure-control-group">
             <label >Painoluokka</label>
-            <input  ng-model="form.painoluokka" type="text" placeholder="Painoluokka" required>
+            <input  ng-model="judoka.painoluokka" type="text" placeholder="Painoluokka" required>
         </div>
         <div class="pure-control-group">
             <label  for="state">Sukupuoli</label>
-            <select ng-model="form.sukupuoli">
+            <select ng-model="judoka.sukupuoli">
                 <option>Mies</option>
                 <option>Nainen</option>
             </select>
@@ -24,12 +24,12 @@
 
         <div class="pure-control-group">
             <label>Maa</label>
-            <input  ng-model="form.maa" id="password" type="text" placeholder="Maa" required>
+            <input  ng-model="judoka.maa" type="text" placeholder="Maa" required>
         </div>
 
 
         <div class="pure-control-group">
-        <button type="submit" class="pure-button pure-button-primary">Lisää judoka</button>
+        <button type="submit" class="pure-button pure-button-primary">Edit</button>
         </div>
     </fieldset>
 </form>

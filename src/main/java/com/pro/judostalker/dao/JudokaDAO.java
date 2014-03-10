@@ -45,10 +45,11 @@ public class JudokaDAO extends DBYhdistaja {
         PreparedStatement prepareStatement = yhteys.prepareStatement("SELECT * FROM Judoka WHERE id = ?");
         prepareStatement.setInt(1, id);
         ResultSet tulos = prepareStatement.executeQuery();
-        tulos.next();
         yhteys.close();
-
-        return luoJudokaOlio(tulos);
+        if (tulos.next()) {
+            return luoJudokaOlio(tulos);
+        }
+        return null;
     }
 
     public void paivitaJudoka(Judoka judoka) throws SQLException {
@@ -60,7 +61,7 @@ public class JudokaDAO extends DBYhdistaja {
         prepareStatement.setString(4, judoka.getSukupuoli());
         prepareStatement.setString(5, judoka.getMaa());
         prepareStatement.setInt(6, judoka.getId());
-        prepareStatement.executeQuery();
+        prepareStatement.execute();
         yhteys.close();
     }
 
@@ -68,7 +69,7 @@ public class JudokaDAO extends DBYhdistaja {
         Connection yhteys = yhdista();
         PreparedStatement prepareStatement = yhteys.prepareStatement("DELETE FROM Judoka WHERE id = ?");
         prepareStatement.setInt(1, id);
-        prepareStatement.executeQuery();
+        prepareStatement.execute();
         yhteys.close();
 
     }
@@ -93,6 +94,7 @@ public class JudokaDAO extends DBYhdistaja {
         judoka.setPainoluokka(tulos.getString("painoluokka"));
         judoka.setSukupuoli(tulos.getString("sukupuoli"));
         judoka.setId(tulos.getInt("id"));
+
         return judoka;
     }
 }
