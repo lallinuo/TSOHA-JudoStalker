@@ -9,17 +9,22 @@ judoStalker.config(function($stateProvider, $urlRouterProvider) {
     $stateProvider
     .state('kayttajat', {
         url: "/kayttajat",
-        templateUrl: "TSOHA-JudoStalker/css/partials/kayttajat.html"
+        templateUrl: "TSOHA-JudoStalker/static/partials/kayttajat.html"
     })
 
     .state('judokat', {
         url: "/judokat",
-        templateUrl: "TSOHA-JudoStalker/css/partials/judokat.html"
+        templateUrl: "TSOHA-JudoStalker/static/partials/judokat.html"
     })
+    
+    .state('judokat.detail',{
+        url:"/:id",
+        templateUrl:"TSOHA-JudoStalker/static/partials/kayttajat.html"
+    })
+    
     .state('tekniikat', {
         url: "/tekniikat",
-        templateUrl: "TSOHA-JudoStalker/css/partials/tekniikat.html",
-     
+        templateUrl: "TSOHA-JudoStalker/static/partials/tekniikat.html"
     });
 });
 var judoStalkerControllers = angular.module('judoStalkerControllers', ['judoStalkerService'])
@@ -87,6 +92,7 @@ judoStalkerControllers.controller('loginCtrl', ["$scope", "$http", "Kayttaja", f
 judoStalkerControllers.controller('judokaCtrl',["$scope","Judoka", function($scope,Judoka){
     $scope.judokat = Judoka.haeKaikki();
     console.log(Judoka.haeKaikki())
+    
 }]);
 
 judoStalkerControllers.controller('kayttajaCtrl',["$scope","Kayttaja", function($scope,Kayttaja){

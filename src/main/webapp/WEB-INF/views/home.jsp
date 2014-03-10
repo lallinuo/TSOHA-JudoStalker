@@ -6,12 +6,12 @@
         <meta charset="utf-8">
         <title>Home</title>
     </head>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" type="text/css" /> 
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/style.css" type="text/css" /> 
     <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.4.2/pure-min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.min.js"></script>
-    <script src= "${pageContext.request.contextPath}/css/angular-ui-router.min.js"></script>
-    <script src= "${pageContext.request.contextPath}/css/angular-resource.min.js"></script>
-    <script src= "${pageContext.request.contextPath}/css/code.js"></script>
+    <script src= "${pageContext.request.contextPath}/static/js/angular-ui-router.min.js"></script>
+    <script src= "${pageContext.request.contextPath}/static/js/angular-resource.min.js"></script>
+    <script src= "${pageContext.request.contextPath}/static/js/code.js"></script>
 
 
 

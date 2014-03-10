@@ -1,5 +1,5 @@
 <div id ="judokat" ng-controller="judokaCtrl">
     <h1>Judokat</h1>
-    <a href="#" ng-repeat-start="judoka in judokat">{{judoka.etunimi}} {{judoka.sukunimi}}</a><br ng-repeat-end/>
+    <a ui-sref="judokat.detail({id: judoka.id})" ng-repeat-start="judoka in judokat">{{judoka.id}} {{judoka.etunimi}} {{judoka.sukunimi}}</a><br ng-repeat-end/>
 
 </div>
