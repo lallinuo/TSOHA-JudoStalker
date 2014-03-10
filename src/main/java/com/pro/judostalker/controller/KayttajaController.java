@@ -47,17 +47,29 @@ public class KayttajaController {
         Kayttaja kayttaja = kayttajaDAO.kirjaudu(kirjautuminen.getKayttajanimi(), kirjautuminen.getSalasana());
         if (kayttaja == null) {
             return null;
-        }else{
-            System.out.println("Attribute has been set");
+        } else {
             session.setAttribute("kirjautunut", true);
             return kayttaja;
         }
     }
 
-    @RequestMapping(value="/logout", method = RequestMethod.GET)
-    public @ResponseBody void kirjauduUlos(HttpSession session){
+    @RequestMapping(value = "/onKirjautunut", method = RequestMethod.GET)
+    @ResponseBody
+    public String onKirjautunut(HttpSession session) {
+        if (session.getAttribute("kirjautunut") != null) {
+            return "{\"kirjautunut\": true}";
+        } else {
+            return "{\"kirjautunut\": false}";
+        }
+
+    }
+
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public @ResponseBody
+    void kirjauduUlos(HttpSession session) {
         session.invalidate();
     }
+
     @RequestMapping(value = "/kayttaja/{id}", method = RequestMethod.GET)
     public @ResponseBody
     Kayttaja haeKayttaja(@PathVariable int id) throws SQLException {

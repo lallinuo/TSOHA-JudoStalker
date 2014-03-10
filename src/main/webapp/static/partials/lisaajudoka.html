@@ -1,0 +1,35 @@
+
+<form class="pure-form pure-form-aligned" ng-submit="lisaaJudoka()">
+    <fieldset>
+        <div class="pure-control-group">
+            <label  for="name">Etunimi</label>
+            <input ng-model="form.etunimi"  type="text" placeholder="Etunimi">
+        </div>
+
+        <div class="pure-control-group">
+            <label for="password">Sukunimi</label>
+            <input ng-model="form.sukunimi" type="text" placeholder="Sukunimi">
+        </div>
+
+        <div class="pure-control-group">
+            <label for="password">Painoluokka</label>
+            <input  ng-model="form.painoluokka" type="text" placeholder="Painoluokka">
+        </div>
+
+        <div class="pure-control-group">
+            <label for="password">Sukupuoli</label>
+            <input ng-model="form.sukupuoli" id="password" type="text" placeholder="Sukupuoli">
+        </div>
+        
+        
+        <div class="pure-control-group">
+            <label for="password">Maa</label>
+            <input  ng-model="form.maa" id="password" type="text" placeholder="Maa">
+        </div>
+
+
+
+        <button type="submit" class="pure-button pure-button-primary">Submit</button>
+        </div>
+    </fieldset>
+</form>

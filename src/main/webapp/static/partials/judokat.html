@@ -1,5 +1,7 @@
-<div id ="judokat" ng-controller="judokaCtrl">
+<div id ="judokat">
     <h1>Judokat</h1>
-    <a ui-sref="judokat.detail({id: judoka.id})" ng-repeat-start="judoka in judokat">{{judoka.id}} {{judoka.etunimi}} {{judoka.sukunimi}}</a><br ng-repeat-end/>
+    <a class="pure-button" ui-sref="lisaajudoka">Lisää judoka</a><br/>
 
+    <a ui-sref="judoka({id: judoka.id})" ng-repeat-start="judoka in judokat">{{judoka.id}} {{judoka.etunimi}} {{judoka.sukunimi}}</a><br ng-repeat-end/>
+    
 </div>
