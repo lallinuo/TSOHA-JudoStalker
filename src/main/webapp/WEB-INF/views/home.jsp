@@ -30,7 +30,7 @@
         </div>
 
         <div id="userinfo" ng-show="kirjautuminen">
-            <a href="TSOHA-JudoStalker/kayttaja/{{kayttaja.id}}">{{kayttaja.kayttajanimi}}</a>
+            <a href="/kayttaja/{{kayttaja.id}}">{{kayttaja.kayttajanimi}}</a>
             <a href="#" ng-click="logout()">Kirjaudu ulos</a>
             <a ui-sref="kayttajat">Käyttäjät</a>
             <a ui-sref="judokat">Judokat</a>

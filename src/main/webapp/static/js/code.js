@@ -7,41 +7,41 @@ judoStalker.config(function($stateProvider, $urlRouterProvider) {
     $stateProvider
     .state('kayttajat', {
         url: "/kayttajat",
-        templateUrl: "TSOHA-JudoStalker/static/partials/kayttajat.html",
+        templateUrl: "/static/partials/kayttajat.html",
         controller: 'kayttajaCtrl'
     })
 
     .state('judokat', {
         url: "/judokat/",
-        templateUrl: "TSOHA-JudoStalker/static/partials/judokat.html",
+        templateUrl: "/static/partials/judokat.html",
         controller: 'judokatCtrl'
     })
     
     .state('judoka',{
         url: "/judokat/:id",
-        templateUrl:"TSOHA-JudoStalker/static/partials/judoka.html",
+        templateUrl:"/static/partials/judoka.html",
         controller: 'judokaCtrl'
     })
     
     .state('lisaajudoka',{
         url: "judoka/lisaa",
-        templateUrl:"TSOHA-JudoStalker/static/partials/lisaajudoka.html",
+        templateUrl:"/static/partials/lisaajudoka.html",
         controller: 'uusiJudokaCtrl'
     })
     .state('muokkaa_judokaa',{
         url:"/judokat/:id/editoi",
-        templateUrl:"TSOHA-JudoStalker/static/partials/editjudoka.html",
+        templateUrl:"/static/partials/editjudoka.html",
         controller: 'judokaCtrl'
     })
     
     .state('tekniikat', {
         url: "/tekniikat",
-        templateUrl: "TSOHA-JudoStalker/static/partials/tekniikat.html",
+        templateUrl: "/static/partials/tekniikat.html",
         controller: 'tekniikkaCtrl'
     })
     .state('tekniikka',{
         url: "/tekniikat/:id",
-        templateUrl:"TSOHA-JudoStalker/static/partials/tekniikka.html",
+        templateUrl:"/static/partials/tekniikka.html",
         controller: 'tekniikkaCtrl'
     })
     
@@ -49,12 +49,12 @@ judoStalker.config(function($stateProvider, $urlRouterProvider) {
 });
 
 judoStalkerServices.factory('Kayttaja', ['$resource', function($resource) {
-    return $resource('TSOHA-JudoStalker/kayttaja',{},{
+    return $resource('/kayttaja',{},{
         });
 }]);
 
 judoStalkerServices.factory('Judoka', ['$resource', function($resource) {
-    return $resource('TSOHA-JudoStalker/judoka/:id',{
+    return $resource('/judoka/:id',{
         id: "@id"
     },{
         'put' : {
@@ -64,18 +64,18 @@ judoStalkerServices.factory('Judoka', ['$resource', function($resource) {
 }]);
 
 judoStalkerServices.factory('Tekniikka', ['$resource', function($resource) {
-    return $resource('TSOHA-JudoStalker/tekniikka',{},{});
+    return $resource('/tekniikka',{},{});
 }]);
 
 judoStalkerServices.factory('Kommentti', ['$resource', function($resource) {
-    return $resource('TSOHA-JudoStalker/kommentti/:id',{
+    return $resource('/kommentti/:id',{
         id: "@id"
     },{});
 }]);
 
 
 judoStalkerServices.factory('JudokaKommentit', ['$resource', function($resource) {
-    return $resource('TSOHA-JudoStalker/judoka/:id/kommentit',{
+    return $resource('/judoka/:id/kommentit',{
         id: "@id"
     },{});
 }]);
@@ -148,7 +148,7 @@ judoStalkerControllers.controller('tekniikkaCtrl',["$scope","Tekniikka","$stateP
 
 
 judoStalkerControllers.controller('loginCtrl', ["$scope", "$http", "Kayttaja","$resource", function($scope, $http, Kayttaja,$resource) {
-    $resource("TSOHA-JudoStalker/onKirjautunut").get(function(data){
+    $resource("/onKirjautunut").get(function(data){
         myId = data[0];
         $scope.kirjautuminen = data.kirjautunut != data[0];
     })
@@ -156,7 +156,7 @@ judoStalkerControllers.controller('loginCtrl', ["$scope", "$http", "Kayttaja","$
     $scope.logout = function() {
         $http({
             method: 'GET',
-            url: 'TSOHA-JudoStalker/logout'
+            url: '/logout'
         }).success(function() {
             $scope.kirjautuminen = false;
         })
@@ -166,7 +166,7 @@ judoStalkerControllers.controller('loginCtrl', ["$scope", "$http", "Kayttaja","$
         
         $http({
             method: 'POST',
-            url: 'TSOHA-JudoStalker/kirjaudu',
+            url: '/kirjaudu',
             data: $scope.login,
             headers: {
                 'Content-Type': 'application/json'
