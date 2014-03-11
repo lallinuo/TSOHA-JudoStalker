@@ -1,12 +1,12 @@
 .error{
     color: red;
 }
-
+.success{
+    color: green;
+}
 #menu{
     background-color: #FFF;
 }
 body{
     background-color: lightblue;
 }
-
-הצהצה

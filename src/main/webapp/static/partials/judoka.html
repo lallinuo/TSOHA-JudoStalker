@@ -21,13 +21,16 @@ and open the template in the editor.
 
 
         <div class="pure-controls">
-
+           
             <button type="submit" class="pure-button pure-button-primary">Lähetä</button>
+           
         </div>
+        <p class="success">{{message}}</p>
     </fieldset>
 </form>
 
 <div ng-repeat="kommentti in kommentit" class="kommentti">
     <hr/>
+    <b>{{kommentti.lahettaja}} | {{kommentti.pvm}} | <a href="#" ng-click="poistaKommentti(kommentti.id)">Poista</a> | <a href="#">Editoi</a> </b><br/>
     {{kommentti.kommentti}} 
 </div>

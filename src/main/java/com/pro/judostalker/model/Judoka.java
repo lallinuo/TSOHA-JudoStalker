@@ -4,7 +4,8 @@
  */
 package com.pro.judostalker.model;
 
-import com.sun.xml.internal.ws.util.StringUtils;
+import org.springframework.util.StringUtils;
+
 
 /**
  *

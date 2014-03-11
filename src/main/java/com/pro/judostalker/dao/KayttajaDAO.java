@@ -57,6 +57,7 @@ public class KayttajaDAO extends DBYhdistaja {
         prepareStatement.setInt(1, id);
         ResultSet tulos = prepareStatement.executeQuery();
         tulos.next();
+        yhteys.close();
         return luoKayttajaOlio(tulos);
     }
 

@@ -68,7 +68,9 @@ judoStalkerServices.factory('Tekniikka', ['$resource', function($resource) {
 }]);
 
 judoStalkerServices.factory('Kommentti', ['$resource', function($resource) {
-    return $resource('TSOHA-JudoStalker/kommentti/:id',{id: "@id"},{});
+    return $resource('TSOHA-JudoStalker/kommentti/:id',{
+        id: "@id"
+    },{});
 }]);
 
 
@@ -89,7 +91,6 @@ judoStalkerControllers.controller('judokaCtrl',["$scope","Judoka","$stateParams"
         $scope.judoka = Judoka.get({},{
             id: $stateParams.id
         });
-    
         $scope.kommentit = JudokaKommentit.query({},{
             id:$stateParams.id
         });
@@ -109,12 +110,22 @@ judoStalkerControllers.controller('judokaCtrl',["$scope","Judoka","$stateParams"
         }
         $scope.kommentoi = function(){
         
-            $scope.kommentti.kayttajaid = myId;
-            $scope.kommentti.judokaid = $scope.judoka.id;
+            $scope.kommentti.kayttajaId = myId;
+            $scope.kommentti.judokaId= $scope.judoka.id;
             Kommentti.save(JSON.stringify($scope.kommentti),function(data){
-                alert(data);
-            });
-            console.log(JSON.stringify($scope.kommentti))
+                $scope.kommentit.push(data);
+                $scope.message = "Viesti lähetetty";
+                $scope.kommentti.kommentti = ""
+            })
+        }
+        
+        $scope.poistaKommentti = function(id){
+            if(confirm("Haluatko varmasti poistaa kommentin?")){
+                Kommentti.delete({},{
+                    "id": id
+                });
+               
+            }
         }
     }]);
 

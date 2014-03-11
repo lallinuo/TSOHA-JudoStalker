@@ -40,23 +40,28 @@ public class KommenttiController {
     }
 
     @RequestMapping(value = "/kommentti", method = RequestMethod.POST)
-    public void lisaaKommentti(@RequestBody Kommentti kommentti) throws SQLException {
-        kommenttiDAO.lisaaKommentti(kommentti);
+    public @ResponseBody Kommentti lisaaKommentti(@RequestBody Kommentti kommentti) throws SQLException {
+        
+        return kommenttiDAO.lisaaKommentti(kommentti);
     }
+    
+  
 
     @RequestMapping(value = "/kommentti", method = RequestMethod.GET)
     public @ResponseBody
     ArrayList<Kommentti> haeKaikkiKommentit() throws SQLException {
+        
         return kommenttiDAO.haeKaikkiKommentit();
     }
 
-    @RequestMapping(value = "kommentti/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "kommentti/{kommenttiId}", method = RequestMethod.GET)
     public @ResponseBody
     Kommentti haeKommentti(@PathVariable int kommenttiId) throws SQLException {
+        
         return kommenttiDAO.haeKommentti(kommenttiId);
     }
 
-    @RequestMapping(value = "/kommentti/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/kommentti/{kommenttiId}", method = RequestMethod.DELETE)
     public void poistaKommentti(@PathVariable int kommenttiId) throws SQLException {
         kommenttiDAO.poistaKommentti(kommenttiId);
     }

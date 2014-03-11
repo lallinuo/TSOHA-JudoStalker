@@ -4,38 +4,51 @@
  */
 package com.pro.judostalker.model;
 
+import java.sql.Date;
+
 /**
  *
  * @author Lalli
  */
 public class Kommentti {
-    private int ID;
-    private int KayttajaID;
-    private int JudokaID;
+
     private String kommentti;
+    private int id;
+    private int judokaId;
+    private int kayttajaId;
+    private String lahettaja;
+    private Date pvm;
 
-    public int getID() {
-        return ID;
+    public Date getPvm() {
+        return pvm;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    public void setPvm(Date pvm) {
+        this.pvm = pvm;
     }
 
-    public int getKayttajaID() {
-        return KayttajaID;
+    public String getLahettaja() {
+        return lahettaja;
     }
 
-    public void setKayttajaID(int KayttajaID) {
-        this.KayttajaID = KayttajaID;
+    public void setLahettaja(String lahettaja) {
+        this.lahettaja = lahettaja;
     }
 
-    public int getJudokaID() {
-        return JudokaID;
+    public int getKayttajaId() {
+        return kayttajaId;
     }
 
-    public void setJudokaID(int JudokaID) {
-        this.JudokaID = JudokaID;
+    public void setKayttajaId(int kayttaja) {
+        this.kayttajaId = kayttaja;
+    }
+
+    public int getJudokaId() {
+        return judokaId;
+    }
+
+    public void setJudokaId(int judoka) {
+        this.judokaId = judoka;
     }
 
     public String getKommentti() {
@@ -45,6 +58,12 @@ public class Kommentti {
     public void setKommentti(String kommentti) {
         this.kommentti = kommentti;
     }
-    
-   
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }
