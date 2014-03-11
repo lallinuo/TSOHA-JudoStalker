@@ -124,7 +124,6 @@ judoStalkerControllers.controller('judokaCtrl',["$scope","Judoka","$stateParams"
                 Kommentti.delete({},{
                     "id": id
                 });
-               
             }
         }
     }]);
