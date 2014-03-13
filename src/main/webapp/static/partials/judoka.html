@@ -31,6 +31,6 @@ and open the template in the editor.
 
 <div ng-repeat="kommentti in kommentit" class="kommentti">
     <hr/>
-    <b>{{kommentti.lahettaja}} | {{kommentti.pvm}} | <a href="#" ng-click="poistaKommentti(kommentti.id)">Poista</a> | <a href="#">Editoi</a> </b><br/>
+    <b>{{kommentti.lahettaja}} | {{kommentti.pvm}} | <a href="#" ng-click="poistaKommentti(kommentti)">Poista</a> | <a href="#">Editoi</a> </b><br/>
     {{kommentti.kommentti}} 
 </div>

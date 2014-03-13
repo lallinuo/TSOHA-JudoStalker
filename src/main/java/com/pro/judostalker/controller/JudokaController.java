@@ -10,12 +10,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
  *
@@ -33,10 +35,13 @@ public class JudokaController {
         return judokaDAO.haeKaikkiJudokat();
     }
 
+    @ResponseStatus(value = HttpStatus.OK)
     @RequestMapping(value = "/judoka/{id}", method = RequestMethod.DELETE)
     public void poistaJudoka(@PathVariable int id) throws SQLException {
         judokaDAO.poistaJudoka(id);
     }
+
+
 
     @RequestMapping(value = "/judoka/{id}", method = RequestMethod.GET)
     public @ResponseBody
