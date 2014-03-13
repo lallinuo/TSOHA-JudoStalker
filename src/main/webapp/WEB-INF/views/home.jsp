@@ -10,6 +10,8 @@
     <script src= "${pageContext.request.contextPath}/static/js/angular-ui-router.min.js"></script>
     <script src= "${pageContext.request.contextPath}/static/js/angular-resource.min.js"></script>
     <script src= "${pageContext.request.contextPath}/static/js/code.js"></script>
+    <script src= "${pageContext.request.contextPath}/static/js/router.js"></script>
+    <script src= "${pageContext.request.contextPath}/static/js/factorys.js"></script>
     
     <meta charset="UTF-8"/>
 

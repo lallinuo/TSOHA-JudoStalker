@@ -3,81 +3,9 @@ var judoStalker = angular.module('judoStalker', ['ui.router',
     'judoStalkerControllers']);
 var judoStalkerControllers = angular.module('judoStalkerControllers', ['judoStalkerService'])
 var judoStalkerServices = angular.module('judoStalkerService', ['ngResource']);
-judoStalker.config(function($stateProvider, $urlRouterProvider) {
-    $stateProvider
-    .state('kayttajat', {
-        url: "/kayttajat",
-        templateUrl: "/static/partials/kayttajat.html",
-        controller: 'kayttajaCtrl'
-    })
-
-    .state('judokat', {
-        url: "/judokat/",
-        templateUrl: "/static/partials/judokat.html",
-        controller: 'judokatCtrl'
-    })
-    
-    .state('judoka',{
-        url: "/judokat/:id",
-        templateUrl:"/static/partials/judoka.html",
-        controller: 'judokaCtrl'
-    })
-    
-    .state('lisaajudoka',{
-        url: "judoka/lisaa",
-        templateUrl:"/static/partials/lisaajudoka.html",
-        controller: 'uusiJudokaCtrl'
-    })
-    .state('muokkaa_judokaa',{
-        url:"/judokat/:id/editoi",
-        templateUrl:"/static/partials/editjudoka.html",
-        controller: 'judokaCtrl'
-    })
-    
-    .state('tekniikat', {
-        url: "/tekniikat",
-        templateUrl: "/static/partials/tekniikat.html",
-        controller: 'tekniikkaCtrl'
-    })
-    .state('tekniikka',{
-        url: "/tekniikat/:id",
-        templateUrl:"/static/partials/tekniikka.html",
-        controller: 'tekniikkaCtrl'
-    })
-    
-    
-});
-
 judoStalkerServices.factory('Kayttaja', ['$resource', function($resource) {
     return $resource('/kayttaja',{},{
         });
-}]);
-
-judoStalkerServices.factory('Judoka', ['$resource', function($resource) {
-    return $resource('/judoka/:id',{
-        id: "@id"
-    },{
-        'put' : {
-            method: 'PUT'
-        }
-    });
-}]);
-
-judoStalkerServices.factory('Tekniikka', ['$resource', function($resource) {
-    return $resource('/tekniikka',{},{});
-}]);
-
-judoStalkerServices.factory('Kommentti', ['$resource', function($resource) {
-    return $resource('/kommentti/:id',{
-        id: "@id"
-    },{});
-}]);
-
-
-judoStalkerServices.factory('JudokaKommentit', ['$resource', function($resource) {
-    return $resource('/judoka/:id/kommentit',{
-        id: "@id"
-    },{});
 }]);
 
 
@@ -118,7 +46,7 @@ judoStalkerControllers.controller('judokaCtrl',["$scope","Judoka","$stateParams"
                 $scope.kommentti.kommentti = ""
             })
         }
-        
+        console.log($scope.kommentit);
         $scope.poistaKommentti = function(id){
             if(confirm("Haluatko varmasti poistaa kommentin?")){
                 Kommentti.delete({},{
