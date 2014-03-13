@@ -6,6 +6,7 @@ judoStalkerServices.factory('Judoka', ['$resource', function($resource) {
         'put' : {
             method: 'PUT'
         }
+    
     });
 }]);
 
@@ -14,14 +15,15 @@ judoStalkerServices.factory('Tekniikka', ['$resource', function($resource) {
 }]);
 
 judoStalkerServices.factory('Kommentti', ['$resource', function($resource) {
-    return $resource('/kommentti/:id',{
-        id: "@id"
-    },{});
+        return $resource('kommentti/:judoka/:id',{
+            id:"@id"
+        },{
+            judokanKommentit :{
+                method : 'GET', isArray: true, params:{judoka:"judoka"}
+            }
+        })
 }]);
 
 
-judoStalkerServices.factory('JudokaKommentit', ['$resource', function($resource) {
-    return $resource('/judoka/:id/kommentit',{
-        id: "@id"
-    },{});
-}]);
+   
+

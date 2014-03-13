@@ -35,7 +35,7 @@ public class KommenttiController {
 
     }
 
-    @RequestMapping(value = "/judoka/{judokaId}/kommentit", method = RequestMethod.GET)
+    @RequestMapping(value = "/kommentti/judoka/{judokaId}", method = RequestMethod.GET)
     public @ResponseBody
     ArrayList<Kommentti> haeKaikkiJudokanKommentit(@PathVariable int judokaId) throws SQLException {
         return kommenttiDAO.haeKaikkiJudokanKommentit(judokaId);

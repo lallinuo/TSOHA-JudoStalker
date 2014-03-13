@@ -8,18 +8,18 @@ judoStalkerServices.factory('Kayttaja', ['$resource', function($resource) {
         });
 }]);
 
-
-
 judoStalkerControllers.controller('judokatCtrl',["$scope","Judoka", function($scope,Judoka){
     $scope.judokat = Judoka.query();
 }]);
 
-judoStalkerControllers.controller('judokaCtrl',["$scope","Judoka","$stateParams","$state","$location","JudokaKommentit","Kommentti",
-    function($scope,Judoka,$stateParams,$state,$location,JudokaKommentit,Kommentti){
+judoStalkerControllers.controller('judokaCtrl',["$scope","Judoka","$stateParams","$state","$location","Kommentti",
+    function($scope,Judoka,$stateParams,$state,$location,Kommentti){
         $scope.judoka = Judoka.get({},{
             id: $stateParams.id
         });
-        $scope.kommentit = JudokaKommentit.query({},{
+        $scope.kommentit = Kommentti.judokanKommentit({
+            id : $scope.judoka.id
+        },{
             id:$stateParams.id
         });
         
@@ -41,21 +41,17 @@ judoStalkerControllers.controller('judokaCtrl',["$scope","Judoka","$stateParams"
             $scope.kommentti.kayttajaId = myId;
             $scope.kommentti.judokaId= $scope.judoka.id;
             Kommentti.save(JSON.stringify($scope.kommentti),function(data){
-                $scope.kommentit.push(data);
                 $scope.message = "Viesti lähetetty";
                 $scope.kommentti.kommentti = ""
+                $scope.kommentit.push(data);
             })
         }
         $scope.poistaKommentti = function(kommentti){
-            Kommentti.delete({},{
-                id: kommentti.id
-                });
+            kommentti.$delete();
             $scope.kommentit.splice($scope.kommentit.indexOf(kommentti),1);
         }
         $scope.editoi = function(kommentti){
-            $scope.editmode = true;
             console.log(kommentti);
-           
         }
     }]);
 
@@ -92,9 +88,7 @@ judoStalkerControllers.controller('loginCtrl', ["$scope", "$http", "Kayttaja","$
             $scope.kirjautuminen = false;
         })
     }
-
     $scope.submit = function() {
-        
         $http({
             method: 'POST',
             url: '/kirjaudu',
