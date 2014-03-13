@@ -46,11 +46,16 @@ judoStalkerControllers.controller('judokaCtrl',["$scope","Judoka","$stateParams"
                 $scope.kommentti.kommentti = ""
             })
         }
-        console.log($scope.kommentit);
         $scope.poistaKommentti = function(kommentti){
-            Kommentti.delete({},{id: kommentti.id});
+            Kommentti.delete({},{
+                id: kommentti.id
+                });
             $scope.kommentit.splice($scope.kommentit.indexOf(kommentti),1);
-            $state.go("judokat/"+$state.id)
+        }
+        $scope.editoi = function(kommentti){
+            $scope.editmode = true;
+            console.log(kommentti);
+           
         }
     }]);
 

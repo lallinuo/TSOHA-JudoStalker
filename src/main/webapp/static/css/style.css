@@ -10,3 +10,9 @@
 body{
     background-color: lightblue;
 }
+
+a{
+    cursor: pointer;
+    color: blue;
+}
+
