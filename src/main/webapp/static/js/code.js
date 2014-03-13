@@ -52,6 +52,7 @@ judoStalkerControllers.controller('judokaCtrl',["$scope","Judoka","$stateParams"
         }
         $scope.editoi = function(kommentti){
             console.log(kommentti);
+            
         }
     }]);
 
