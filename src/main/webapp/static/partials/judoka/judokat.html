@@ -1,17 +1,17 @@
 
 <div id ="judokat">
     <h1>Judokat</h1>
-   
+
     <a class="pure-button" ui-sref="lisaajudoka" >Lisää judoka</a><br/><br/>
-     <input ng-model="query" placeholder="Haku">
+    <input ng-model="query" placeholder="Haku">
     <table class="pure-table pure-table-bordered">
         <thead>
             <tr>
-                <th><a href="" ng-click="predicate ='etunimi';reverse=!reverse">Etunimi</a></th>
-                <th><a href="" ng-click="predicate ='sukunimi';reverse=!reverse">Sukunimi</a></th>
-                <th><a href="" ng-click="predicate ='painoluokka';reverse=!reverse">Painoluokka</a></th>
-                <th><a href="" ng-click="predicate ='sukupuoli';reverse=!reverse">Sukupuoli</a></th>
-                <th><a href="" ng-click="predicate ='maa'">Maa</a></th>
+                <th><a ng-click="predicate ='etunimi';reverse=!reverse">Etunimi</a></th>
+                <th><a ng-click="predicate ='sukunimi';reverse=!reverse">Sukunimi</a></th>
+                <th><a ng-click="predicate ='painoluokka';reverse=!reverse">Painoluokka</a></th>
+                <th><a ng-click="predicate ='sukupuoli';reverse=!reverse">Sukupuoli</a></th>
+                <th><a ng-click="predicate ='maa'">Maa</a></th>
             </tr>
         </thead>
         <tbody>

@@ -25,17 +25,24 @@ public class TekniikkaController {
 
     @Autowired
     private TekniikkaDAO tekniikkaDAO;
-    
-    
-    @RequestMapping(value= "/tekniikka", method = RequestMethod.GET)
-    public @ResponseBody ArrayList<Tekniikka> haeKaikkiTekniikat() throws SQLException{
+
+    @RequestMapping(value = "/tekniikka", method = RequestMethod.GET)
+    public @ResponseBody
+    ArrayList<Tekniikka> haeKaikkiTekniikat() throws SQLException {
         return tekniikkaDAO.haeKaikkiTekniikat();
-        
+
     }
+
+    @RequestMapping(value = "/tekniikka/{judokaId}/{tekniikkaId}", method = RequestMethod.POST)
+    public @ResponseBody
+    void lisaaTekniikkaJudokalle(@PathVariable int judokaId, @PathVariable int tekniikkaId) throws SQLException {
+        tekniikkaDAO.lisaaTekniikkaJudokalle(judokaId, tekniikkaId);
+    }
+
     @RequestMapping(value = "/tekniikka", method = RequestMethod.POST, headers = {"Content-type=application/json"})
-    public String lisaaTekniikka(@RequestBody Tekniikka tekniikka) throws SQLException {
-        tekniikkaDAO.lisaaTekniikka(tekniikka);
-        return "home";
+    public @ResponseBody
+    Tekniikka lisaaTekniikka(@RequestBody Tekniikka tekniikka) throws SQLException {
+        return tekniikkaDAO.lisaaTekniikka(tekniikka);
     }
 
     @RequestMapping(value = "/tekniikka/{id}", method = RequestMethod.GET)
@@ -43,6 +50,13 @@ public class TekniikkaController {
     Tekniikka haeTekniikka(@PathVariable int id) throws SQLException {
 
         return tekniikkaDAO.haeTekniikka(id);
+    }
+
+    @RequestMapping(value = "/tekniikka/judoka/{judokaId}", method = RequestMethod.GET)
+    public @ResponseBody
+    ArrayList<Tekniikka> haeJudokanTekniikat(int judokaId) throws SQLException {
+        return tekniikkaDAO.haeJudokanTekniikat(judokaId);
+
     }
 
     @RequestMapping(value = "/tekniikka/{id}", method = RequestMethod.DELETE)

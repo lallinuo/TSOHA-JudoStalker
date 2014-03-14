@@ -8,11 +8,14 @@ judoStalkerControllers.controller('judokatCtrl',["$scope","Judoka", function($sc
     $scope.judokat = Judoka.query();
 }]);
 
-judoStalkerControllers.controller('judokaCtrl',["$scope","Judoka","$stateParams","$state","$location","Kommentti",
-    function($scope,Judoka,$stateParams,$state,$location,Kommentti){
+judoStalkerControllers.controller('judokaCtrl',["$scope","Judoka","$stateParams","$state","$location","Kommentti", "Tekniikka",
+    function($scope,Judoka,$stateParams,$state,$location,Kommentti,Tekniikka){
+        
         $scope.judoka = Judoka.get({},{
             id: $stateParams.id
         });
+        
+        $scope.tekniikat = Tekniikka.query();
         $scope.kommentit = Kommentti.judokanKommentit({
             id : $scope.judoka.id
         },{
@@ -52,12 +55,21 @@ judoStalkerControllers.controller('judokaCtrl',["$scope","Judoka","$stateParams"
         $scope.editoi = function(kommentti){
             delete kommentti["editointi"];
             kommentti.$put();
-            
+        }
+        
+        $scope.lisaaTekniikka = function(judoka){
+            console.log($scope.valittuTekniikka);
+            Tekniikka.lisaaTekniikkaJudokalle({
+                id:$scope.valittuTekniikka, 
+                judoka:judoka.id
+                },{
+           
+            })
         }
     }]);
 
 
-judoStalkerControllers.controller('uusiJudokaCtrl',["$scope","Judoka","$location","$state", function($scope,Judoka,$location,$state){
+judoStalkerControllers.controller('uusiJudokaCtrl',["$scope","Judoka","$location", function($scope,Judoka,$location){
     $scope.lisaaJudoka = function(){ 
         Judoka.save(JSON.stringify($scope.form),function(data){
             $location.path("judokat/"+data.id);
@@ -69,9 +81,25 @@ judoStalkerControllers.controller('kayttajaCtrl',["$scope","Kayttaja", function(
     $scope.kayttajat = Kayttaja.query();
 }]);
 
-judoStalkerControllers.controller('tekniikkaCtrl',["$scope","Tekniikka","$stateParams", function($scope,Tekniikka){
+judoStalkerControllers.controller('tekniikatCtrl',["$scope","Tekniikka", function($scope,Tekniikka){
     $scope.tekniikat = Tekniikka.query();
 }]);
+
+judoStalkerControllers.controller('tekniikkaCtrl',["$scope","Tekniikka","$stateParams", function($scope,Tekniikka,$stateParams){
+    $scope.tekniikka = Tekniikka.get({
+        id:$stateParams.id
+    });
+}]);
+
+judoStalkerControllers.controller('uusiTekniikkaCtrl',["$scope","Tekniikka","$location", function($scope,Tekniikka,$location){
+    $scope.lisaaTekniikka = function(){
+        Tekniikka.save(JSON.stringify($scope.form),function(data){
+            $location.path("tekniikat/"+data.id);
+        })
+    }
+  
+}]);
+
 
 
 

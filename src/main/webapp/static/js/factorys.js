@@ -16,7 +16,11 @@ judoStalkerServices.factory('Judoka', ['$resource', function($resource) {
 }]);
 
 judoStalkerServices.factory('Tekniikka', ['$resource', function($resource) {
-    return $resource('/tekniikka',{},{});
+    return $resource('/tekniikka/:judoka/:id',{id:"@id",judoka:"@judoka"},{
+        lisaaTekniikkaJudokalle : {
+            method: 'POST'
+        }
+    });
 }]);
 
 judoStalkerServices.factory('Kommentti', ['$resource', function($resource) {

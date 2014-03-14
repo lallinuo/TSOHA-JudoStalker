@@ -8,8 +8,18 @@ and open the template in the editor.
 <p><b>Sukupuoli:</b> {{judoka.sukupuoli}}</p>
 <p><b>Maa:</b> {{judoka.maa}}</p>
 <p><b>Painoluokka:</b> {{judoka.painoluokka}}</p>
+
 <a class="pure-button" ui-sref="muokkaa_judokaa({id:judoka.id})">Muokkaa</a>
 <a class="pure-button" ng-click="poistaJudoka()">Poista</a>
+<hr/>
+
+
+<select  ng-model="valittuTekniikka">
+    <option ng-repeat="tekniikka in tekniikat" value="{{tekniikka.id}}">{{tekniikka.nimi}}</option>
+</select>
+<a class="pure-button" ng-click="lisaaTekniikka({id:judoka.id})">Lisää tekniikka</a>
+
+<br/>
 <hr/>
 
 <form class="pure-form pure-form-aligned" ng-submit="kommentoi()">

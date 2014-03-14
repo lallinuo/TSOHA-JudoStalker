@@ -25,55 +25,73 @@ public class TekniikkaDAO extends DBYhdistaja {
         super();
     }
 
-    public void lisaaTekniikka(Tekniikka tekniikka) throws SQLException {
+    public Tekniikka lisaaTekniikka(Tekniikka tekniikka) throws SQLException {
         Connection yhteys = yhdista();
-        PreparedStatement prepareStatement = yhteys.prepareStatement("INSERT INTO Tekniikka(nimi) VALUES (?)");
-        prepareStatement.setString(1, tekniikka.getNimi());
-        prepareStatement.execute();
-        yhteys.close();
+        try {
+            PreparedStatement prepareStatement = yhteys.prepareStatement("INSERT INTO Tekniikka(nimi) VALUES (?) RETURNING id");
+            prepareStatement.setString(1, tekniikka.getNimi());
+            ResultSet tulos = prepareStatement.executeQuery();
+            tulos.next();
+            tekniikka.setID(tulos.getInt("id"));
+            yhteys.close();
+        } finally {
+            return tekniikka;
+        }
     }
 
     public Tekniikka haeTekniikka(int id) throws SQLException {
         Connection yhteys = yhdista();
-        PreparedStatement prepareStatement = yhteys.prepareStatement("SELECT * FROM Tekniikka WHERE id = ?");
-        prepareStatement.setInt(1, id);
-        ResultSet tulos = prepareStatement.executeQuery();
-        tulos.next();
-        yhteys.close();
-        return luoTekniikkaOlio(tulos);
+        try {
+            PreparedStatement prepareStatement = yhteys.prepareStatement("SELECT * FROM Tekniikka WHERE id = ?");
+            prepareStatement.setInt(1, id);
+            ResultSet tulos = prepareStatement.executeQuery();
+            tulos.next();
+            yhteys.close();
+            return luoTekniikkaOlio(tulos);
+        } finally {
+            yhteys.close();
+        }
     }
 
     public void paivitaTekniikka(Tekniikka tekniikka) throws SQLException {
         Connection yhteys = yhdista();
-        PreparedStatement prepareStatement = yhteys.prepareStatement("UPDATE Tekniikka SET nimi = ? ");
-        prepareStatement.setString(1, tekniikka.getNimi());
-        prepareStatement.execute();
-        yhteys.close();
+        try {
+            PreparedStatement prepareStatement = yhteys.prepareStatement("UPDATE Tekniikka SET nimi = ? ");
+            prepareStatement.setString(1, tekniikka.getNimi());
+            prepareStatement.execute();
+        } finally {
+            yhteys.close();
+        }
     }
 
     public void poistaTekniikka(int id) throws SQLException {
         Connection yhteys = yhdista();
-        PreparedStatement prepareStatement = yhteys.prepareStatement("DELETE FROM Tekniikka WHERE id = ?");
-        prepareStatement.setInt(1, id);
-        ResultSet tulos = prepareStatement.executeQuery();
-        yhteys.close();
-
+        try {
+            PreparedStatement prepareStatement = yhteys.prepareStatement("DELETE FROM Tekniikka WHERE id = ?");
+            prepareStatement.setInt(1, id);
+            ResultSet tulos = prepareStatement.executeQuery();
+        } finally {
+            yhteys.close();
+        }
     }
 
     public ArrayList<Tekniikka> haeKaikkiTekniikat() throws SQLException {
         Connection yhteys = yhdista();
-        ArrayList<Tekniikka> tekniikat = new ArrayList<Tekniikka>();
-        PreparedStatement prepareStatement = yhteys.prepareStatement("SELECT * FROM Tekniikka");
-        if (prepareStatement.execute()) {
-            ResultSet tulokset = prepareStatement.getResultSet();
+        try {
+            ArrayList<Tekniikka> tekniikat = new ArrayList<Tekniikka>();
+            PreparedStatement prepareStatement = yhteys.prepareStatement("SELECT * FROM Tekniikka");
+            if (prepareStatement.execute()) {
+                ResultSet tulokset = prepareStatement.getResultSet();
 
-            while (tulokset.next()) {
-                tekniikat.add(luoTekniikkaOlio(tulokset));
+                while (tulokset.next()) {
+                    tekniikat.add(luoTekniikkaOlio(tulokset));
+                }
             }
-        }
-        yhteys.close();
+            return tekniikat;
 
-        return tekniikat;
+        } finally {
+            yhteys.close();
+        }
     }
 
     private Tekniikka luoTekniikkaOlio(ResultSet tulos) throws SQLException {
@@ -83,5 +101,33 @@ public class TekniikkaDAO extends DBYhdistaja {
 
         return tekniikka;
 
+    }
+
+    public ArrayList<Tekniikka> haeJudokanTekniikat(int judokaId) throws SQLException {
+        Connection yhteys = yhdista();
+        PreparedStatement prepareStatement = yhteys.prepareStatement("SELECT tekniikka_id FROM tekniikka_judoka WHERE judokaid = ?");
+        prepareStatement.setInt(1, judokaId);
+        ResultSet resultSet = prepareStatement.executeQuery();
+        ArrayList<Tekniikka> tekniikat = new ArrayList<Tekniikka>();
+        int haettava;
+        while (resultSet.next()) {
+            haettava = resultSet.getInt("id");
+            tekniikat.add(haeTekniikka(haettava));  //Haetaan 
+        }
+        return tekniikat;
+
+
+    }
+
+    public void lisaaTekniikkaJudokalle(int judokaId, int tekniikkaId) throws SQLException {
+        Connection yhteys = yhdista();
+        try {
+            PreparedStatement prepareStatement = yhteys.prepareStatement("INSERT INTO tekniikka_judoka(judokaid,tekniikkaid) VALUES(?,?)");
+            prepareStatement.setInt(1, judokaId);
+            prepareStatement.setInt(2, tekniikkaId);
+            prepareStatement.execute();
+        } finally {
+            yhteys.close();
+        }
     }
 }
