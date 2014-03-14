@@ -4,7 +4,7 @@ Judostalker on tietokantasovelluskurssille tehty harjoitustyö, jossa käytetään S
 
 Dokumentaatio
 --
-[Dokumentaatio.docx](Dokumentaatio/TSOHA.docx)
+[Dokumentaatio.docx](Dokumentaatio/TSOHA.pdf)
 Sovellus
 --
 http://judostalker.herokuapp.com

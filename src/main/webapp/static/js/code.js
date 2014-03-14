@@ -3,10 +3,6 @@ var judoStalker = angular.module('judoStalker', ['ui.router',
     'judoStalkerControllers']);
 var judoStalkerControllers = angular.module('judoStalkerControllers', ['judoStalkerService'])
 var judoStalkerServices = angular.module('judoStalkerService', ['ngResource']);
-judoStalkerServices.factory('Kayttaja', ['$resource', function($resource) {
-    return $resource('/kayttaja',{},{
-        });
-}]);
 
 judoStalkerControllers.controller('judokatCtrl',["$scope","Judoka", function($scope,Judoka){
     $scope.judokat = Judoka.query();
@@ -50,8 +46,12 @@ judoStalkerControllers.controller('judokaCtrl',["$scope","Judoka","$stateParams"
             kommentti.$delete();
             $scope.kommentit.splice($scope.kommentit.indexOf(kommentti),1);
         }
+        $scope.avaaEditointi= function(kommentti){
+            kommentti.editointi = "true";
+        }
         $scope.editoi = function(kommentti){
-            console.log(kommentti);
+            delete kommentti["editointi"];
+            kommentti.$put();
             
         }
     }]);
@@ -102,7 +102,6 @@ judoStalkerControllers.controller('loginCtrl', ["$scope", "$http", "Kayttaja","$
                 $scope.kayttaja = data;
                 $scope.kirjautuminen = true;
                 myId = data.id;
-                console.log(myId)
             } else {
                 $scope.error = "Väärä käyttäjätunnus tai salasana";
             }

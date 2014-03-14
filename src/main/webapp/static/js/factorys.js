@@ -1,3 +1,8 @@
+judoStalkerServices.factory('Kayttaja', ['$resource', function($resource) {
+    return $resource('/kayttaja',{},{
+        });
+}]);
+
 
 judoStalkerServices.factory('Judoka', ['$resource', function($resource) {
     return $resource('/judoka/:id',{
@@ -20,6 +25,9 @@ judoStalkerServices.factory('Kommentti', ['$resource', function($resource) {
         },{
             judokanKommentit :{
                 method : 'GET', isArray: true, params:{judoka:"judoka"}
+            },
+            put: {
+                method:'PUT'
             }
         })
 }]);

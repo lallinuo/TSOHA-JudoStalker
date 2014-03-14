@@ -21,17 +21,20 @@ and open the template in the editor.
 
 
         <div class="pure-controls">
-           
+
             <button type="submit" class="pure-button pure-button-primary">Lähetä</button>
-           
+
         </div>
         <p class="success">{{message}}</p>
     </fieldset>
 </form>
 
-<div ng-repeat="kommentti in kommentit" class="kommentti">
+<div ng-repeat="kommentti in kommentit | orderBy:kommentti.id" class="kommentti">
     <hr/>
-    <b>{{kommentti.lahettaja}} | {{kommentti.pvm}} | <a ng-click="poistaKommentti(kommentti)">Poista</a> | <a  ng-click="editoi(kommentti)">Editoi</a> </b><br/>
-    <p ng-show="kommentti"> {{kommentti.kommentti}} </p>
-
+    <b>{{kommentti.lahettaja}} | {{kommentti.pvm}} | <a ng-click="poistaKommentti(kommentti)">Poista</a> | <a  ng-click="avaaEditointi(kommentti)">Editoi</a> </b><br/>
+    <p ng-show="!kommentti.editointi"> {{kommentti.kommentti}} </p>
+    <div ng-show="kommentti.editointi" id="editointi">
+        <textarea  rows="8" cols="60" ng-model="kommentti.kommentti">  </textarea><br/>
+        <button type="submit" class="pure-button pure-button-primary" ng-click="editoi(kommentti)">Tallenna</button>
+    </div>
 </div>

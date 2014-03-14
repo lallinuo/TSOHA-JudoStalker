@@ -62,9 +62,10 @@ public class KommenttiDAO extends DBYhdistaja {
 
     public void paivitaKommenti(Kommentti kommentti) throws SQLException {
         Connection yhteys = yhdista();
-        PreparedStatement prepareStatement = yhteys.prepareStatement("UPDATE TKommentti SET kommentti = ? WHERE id = ?");
+        PreparedStatement prepareStatement = yhteys.prepareStatement("UPDATE Kommentti SET kommentti = ? WHERE id = ?");
         prepareStatement.setString(1, kommentti.getKommentti());
         prepareStatement.setInt(2, kommentti.getId());
+        prepareStatement.execute();
         yhteys.close();
     }
 

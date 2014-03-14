@@ -12,8 +12,25 @@
 
         <div class="pure-control-group">
             <label >Painoluokka</label>
-            <input  ng-model="judoka.painoluokka" type="text" placeholder="Painoluokka" required>
+            <select ng-model="judoka.painoluokka">
+                <option>-60kg</option>
+                <option>-66kg</option>
+                <option>-73kg</option>
+                <option>-81kg</option>
+                <option>-90kg</option>
+                <option>-100kg</option>
+                <option>+100kg</option>
+                <option>-44kg</option>
+                <option>-48kg</option>
+                <option>-52kg</option>
+                <option>-57kg</option>
+                <option>-63kg</option>
+                <option>-70kg</option>
+                <option>-78kg</option>
+                <option>+78kg</option>
+            </select>
         </div>
+        
         <div class="pure-control-group">
             <label  for="state">Sukupuoli</label>
             <select ng-model="judoka.sukupuoli">
@@ -29,7 +46,7 @@
 
 
         <div class="pure-control-group">
-        <button type="submit" class="pure-button pure-button-primary">Edit</button>
+            <button type="submit" class="pure-button pure-button-primary">Edit</button>
         </div>
     </fieldset>
 </form>
