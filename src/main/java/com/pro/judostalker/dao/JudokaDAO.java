@@ -53,6 +53,7 @@ public class JudokaDAO extends DBYhdistaja {
     }
 
     public void paivitaJudoka(Judoka judoka) throws SQLException {
+        
         Connection yhteys = yhdista();
         PreparedStatement prepareStatement = yhteys.prepareStatement("UPDATE Judoka SET etunimi = ?, sukunimi = ?, painoluokka = ?, sukupuoli = ?, maa = ? WHERE id = ?");
         prepareStatement.setString(1, judoka.getEtunimi());
@@ -96,5 +97,23 @@ public class JudokaDAO extends DBYhdistaja {
         judoka.setId(tulos.getInt("id"));
 
         return judoka;
+    }
+
+    public ArrayList<Judoka> haeTekniikkaaKayttavatJudokat(int tekniikkaId) throws SQLException {
+        Connection yhteys = yhdista();
+        try {
+            ArrayList<Judoka> judokat = new ArrayList<Judoka>();
+            PreparedStatement prepareStatement = yhteys.prepareStatement("SELECT judokaid FROM tekniikka_judoka WHERE tekniikkaid = ?");
+            prepareStatement.setInt(1, tekniikkaId);
+            ResultSet tulos = prepareStatement.executeQuery();
+            int haettava;
+            while (tulos.next()) {
+                haettava = tulos.getInt("judokaid");
+                judokat.add(haeJudoka(haettava));
+            }
+            return judokat;
+        } finally {
+            yhteys.close();
+        }
     }
 }

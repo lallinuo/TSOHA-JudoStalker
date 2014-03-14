@@ -4,136 +4,153 @@ var judoStalker = angular.module('judoStalker', ['ui.router',
 var judoStalkerControllers = angular.module('judoStalkerControllers', ['judoStalkerService'])
 var judoStalkerServices = angular.module('judoStalkerService', ['ngResource']);
 
-judoStalkerControllers.controller('judokatCtrl',["$scope","Judoka", function($scope,Judoka){
-    $scope.judokat = Judoka.query();
-}]);
+judoStalkerControllers.controller('judokatCtrl', ["$scope", "Judoka", function($scope, Judoka) {
+        $scope.judokat = Judoka.query();
+    }]);
 
-judoStalkerControllers.controller('judokaCtrl',["$scope","Judoka","$stateParams","$state","$location","Kommentti", "Tekniikka",
-    function($scope,Judoka,$stateParams,$state,$location,Kommentti,Tekniikka){
-        
-        $scope.judoka = Judoka.get({},{
+judoStalkerControllers.controller('judokaCtrl', ["$scope", "Judoka", "$stateParams", "$state", "$location", "Kommentti", "Tekniikka",
+    function($scope, Judoka, $stateParams, $state, $location, Kommentti, Tekniikka) {
+
+        $scope.judoka = Judoka.get({}, {
             id: $stateParams.id
         });
-        
+
         $scope.tekniikat = Tekniikka.query();
+
+        $scope.judokanTekniikat = Tekniikka.haeJudokanTekniikat({id: $scope.judoka.id});
         $scope.kommentit = Kommentti.judokanKommentit({
-            id : $scope.judoka.id
-        },{
-            id:$stateParams.id
+            id: $scope.judoka.id
+        }, {
+            id: $stateParams.id
         });
-        
-        $scope.edit = function(){
-            $scope.judoka.$put(function(){
-                $location.path("judokat/"+$scope.judoka.id)
+
+        $scope.edit = function() {
+            $scope.judoka.$put(function() {
+                $location.path("judokat/" + $scope.judoka.id)
             });
-        
+
         }
-    
-        $scope.poistaJudoka = function(){
-            if(confirm("Haluatko varmasti poistaa judokan?")){
+
+        $scope.poistaJudoka = function() {
+            if (confirm("Haluatko varmasti poistaa judokan?")) {
                 $scope.judoka.$delete();
                 $state.go('judokat');
             }
         }
-        $scope.kommentoi = function(){
-        
+        $scope.kommentoi = function() {
+
             $scope.kommentti.kayttajaId = myId;
-            $scope.kommentti.judokaId= $scope.judoka.id;
-            Kommentti.save(JSON.stringify($scope.kommentti),function(data){
+            $scope.kommentti.judokaId = $scope.judoka.id;
+            Kommentti.save(JSON.stringify($scope.kommentti), function(data) {
                 $scope.message = "Viesti lähetetty";
                 $scope.kommentti.kommentti = ""
                 $scope.kommentit.push(data);
             })
         }
-        $scope.poistaKommentti = function(kommentti){
+        $scope.poistaKommentti = function(kommentti) {
             kommentti.$delete();
-            $scope.kommentit.splice($scope.kommentit.indexOf(kommentti),1);
+            $scope.kommentit.splice($scope.kommentit.indexOf(kommentti), 1);
         }
-        $scope.avaaEditointi= function(kommentti){
+        $scope.avaaEditointi = function(kommentti) {
             kommentti.editointi = "true";
         }
-        $scope.editoi = function(kommentti){
+        $scope.editoi = function(kommentti) {
             delete kommentti["editointi"];
             kommentti.$put();
         }
-        
-        $scope.lisaaTekniikka = function(judoka){
+
+        $scope.lisaaTekniikka = function(judoka) {
             console.log($scope.valittuTekniikka);
-            Tekniikka.lisaaTekniikkaJudokalle({
-                id:$scope.valittuTekniikka, 
-                judoka:judoka.id
-                },{
-           
+            if ($scope.judokanTekniikat.indexOf($scope.valittuTekniikka) == -1) {
+                Tekniikka.lisaaTekniikkaJudokalle({
+                    id: $scope.valittuTekniikka.id,
+                    judoka: judoka.id
+                }, function() {
+                    $scope.judokanTekniikat.push($scope.valittuTekniikka)
+                })
+            }else{
+                alert("Judokalla on jo tämä tekniikka");
+            }
+        }
+
+        $scope.poistaTekniikka = function(tekniikka, judoka) {
+            tekniikka.$poistaTekniikkaJudokalta({judoka: judoka.id, id: tekniikka.id}, function() {
+                $scope.judokanTekniikat.splice($scope.judokanTekniikat.indexOf(tekniikka), 1);
+            });
+
+        }
+
+    }]);
+
+
+judoStalkerControllers.controller('uusiJudokaCtrl', ["$scope", "Judoka", "$location", function($scope, Judoka, $location) {
+        $scope.lisaaJudoka = function() {
+            Judoka.save(JSON.stringify($scope.form), function(data) {
+                $location.path("judokat/" + data.id);
+            });
+        }
+    }]);
+
+judoStalkerControllers.controller('kayttajaCtrl', ["$scope", "Kayttaja", function($scope, Kayttaja) {
+        $scope.kayttajat = Kayttaja.query();
+    }]);
+
+judoStalkerControllers.controller('tekniikatCtrl', ["$scope", "Tekniikka", function($scope, Tekniikka) {
+        $scope.tekniikat = Tekniikka.query();
+    }]);
+
+judoStalkerControllers.controller('tekniikkaCtrl', ["$scope", "Tekniikka", "$stateParams","Judoka", function($scope, Tekniikka, $stateParams,Judoka) {
+        $scope.tekniikka = Tekniikka.get({
+            id: $stateParams.id
+        });
+        
+        $scope.judokat = Judoka.haeTekniikkaaKayttavatJudokat({
+            id: $stateParams.id,
+        })
+    }]);
+
+judoStalkerControllers.controller('uusiTekniikkaCtrl', ["$scope", "Tekniikka", "$location", function($scope, Tekniikka, $location) {
+        $scope.lisaaTekniikka = function() {
+            Tekniikka.save(JSON.stringify($scope.form), function(data) {
+                $location.path("tekniikat/" + data.id);
             })
         }
     }]);
 
 
-judoStalkerControllers.controller('uusiJudokaCtrl',["$scope","Judoka","$location", function($scope,Judoka,$location){
-    $scope.lisaaJudoka = function(){ 
-        Judoka.save(JSON.stringify($scope.form),function(data){
-            $location.path("judokat/"+data.id);
-        });
-    }
-}]);
 
-judoStalkerControllers.controller('kayttajaCtrl',["$scope","Kayttaja", function($scope,Kayttaja){
-    $scope.kayttajat = Kayttaja.query();
-}]);
 
-judoStalkerControllers.controller('tekniikatCtrl',["$scope","Tekniikka", function($scope,Tekniikka){
-    $scope.tekniikat = Tekniikka.query();
-}]);
-
-judoStalkerControllers.controller('tekniikkaCtrl',["$scope","Tekniikka","$stateParams", function($scope,Tekniikka,$stateParams){
-    $scope.tekniikka = Tekniikka.get({
-        id:$stateParams.id
-    });
-}]);
-
-judoStalkerControllers.controller('uusiTekniikkaCtrl',["$scope","Tekniikka","$location", function($scope,Tekniikka,$location){
-    $scope.lisaaTekniikka = function(){
-        Tekniikka.save(JSON.stringify($scope.form),function(data){
-            $location.path("tekniikat/"+data.id);
+judoStalkerControllers.controller('loginCtrl', ["$scope", "$http", "Kayttaja", "$resource", function($scope, $http, Kayttaja, $resource) {
+        $resource("/onKirjautunut").get(function(data) {
+            myId = data[0];
+            $scope.kirjautuminen = data.kirjautunut != data[0];
         })
-    }
-  
-}]);
 
-
-
-
-judoStalkerControllers.controller('loginCtrl', ["$scope", "$http", "Kayttaja","$resource", function($scope, $http, Kayttaja,$resource) {
-    $resource("/onKirjautunut").get(function(data){
-        myId = data[0];
-        $scope.kirjautuminen = data.kirjautunut != data[0];
-    })
- 
-    $scope.logout = function() {
-        $http({
-            method: 'GET',
-            url: '/logout'
-        }).success(function() {
-            $scope.kirjautuminen = false;
-        })
-    }
-    $scope.submit = function() {
-        $http({
-            method: 'POST',
-            url: '/kirjaudu',
-            data: $scope.login,
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).success(function(data) {
-            if (data.id) {
-                $scope.kayttaja = data;
-                $scope.kirjautuminen = true;
-                myId = data.id;
-            } else {
-                $scope.error = "Väärä käyttäjätunnus tai salasana";
-            }
-        });
-    };
-}]);
+        $scope.logout = function() {
+            $http({
+                method: 'GET',
+                url: '/logout'
+            }).success(function() {
+                $scope.kirjautuminen = false;
+            })
+        }
+        $scope.submit = function() {
+            $http({
+                method: 'POST',
+                url: '/kirjaudu',
+                data: $scope.login,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).success(function(data) {
+                if (data.id) {
+                    $scope.kayttaja = data;
+                    $scope.kirjautuminen = true;
+                    myId = data.id;
+                } else {
+                    $scope.error = "Väärä käyttäjätunnus tai salasana";
+                }
+            });
+        };
+    }]);
     

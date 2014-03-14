@@ -54,7 +54,7 @@ public class TekniikkaController {
 
     @RequestMapping(value = "/tekniikka/judoka/{judokaId}", method = RequestMethod.GET)
     public @ResponseBody
-    ArrayList<Tekniikka> haeJudokanTekniikat(int judokaId) throws SQLException {
+    ArrayList<Tekniikka> haeJudokanTekniikat(@PathVariable int judokaId) throws SQLException {
         return tekniikkaDAO.haeJudokanTekniikat(judokaId);
 
     }
@@ -70,6 +70,11 @@ public class TekniikkaController {
     public @ResponseBody
     void paivitaTekniikka(@RequestBody Tekniikka tekniikka) throws SQLException {
         tekniikkaDAO.paivitaTekniikka(tekniikka);
-
+    }
+    
+    @RequestMapping(value="/tekniikka/{judokaId}/{tekniikkaId}", method = RequestMethod.DELETE)
+    public @ResponseBody 
+    void poistaTekniikkaJudokalta(@PathVariable int judokaId, @PathVariable int tekniikkaId) throws SQLException{
+        tekniikkaDAO.poistaTekniikkaJudokalta(judokaId,tekniikkaId);
     }
 }

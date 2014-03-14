@@ -4,3 +4,7 @@ and open the template in the editor.
 -->
 <h1>{{tekniikka.nimi}}</h1>
 <b>{{tekniikka.nimi}} tekniikkaa käyttävät judokat:</b>
+
+<ul>
+    <li ng-repeat="judoka in judokat"><a ui-sref="judoka({id:judoka.id})">{{judoka.etunimi}} {{judoka.sukunimi}}</a></li>
+</ul>

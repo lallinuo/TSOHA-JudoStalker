@@ -5,8 +5,8 @@
         <title>Home</title>
     </head>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/style.css" type="text/css" /> 
-    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.4.2/pure-min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.min.js"></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/pure-min.css" type="text/css" /> 
+    <script src= "${pageContext.request.contextPath}/static/js/angular.min.js"></script>
     <script src= "${pageContext.request.contextPath}/static/js/angular-ui-router.min.js"></script>
     <script src= "${pageContext.request.contextPath}/static/js/angular-resource.min.js"></script>
     <script src= "${pageContext.request.contextPath}/static/js/code.js"></script>
@@ -39,7 +39,7 @@
             <a ui-sref="tekniikat">Tekniikat</a>
         </div>
         <div ng-show="kirjautuminen != null">
-            <div ui-view ></div>
+            <div ui-view></div>
         </div>
 
     </div>

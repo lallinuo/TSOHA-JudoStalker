@@ -4,7 +4,6 @@
  */
 package com.pro.judostalker.dao;
 
-import com.pro.judostalker.model.Judoka;
 import com.pro.judostalker.model.Tekniikka;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -105,13 +104,13 @@ public class TekniikkaDAO extends DBYhdistaja {
 
     public ArrayList<Tekniikka> haeJudokanTekniikat(int judokaId) throws SQLException {
         Connection yhteys = yhdista();
-        PreparedStatement prepareStatement = yhteys.prepareStatement("SELECT tekniikka_id FROM tekniikka_judoka WHERE judokaid = ?");
+        PreparedStatement prepareStatement = yhteys.prepareStatement("SELECT tekniikkaid FROM tekniikka_judoka WHERE judokaid = ?");
         prepareStatement.setInt(1, judokaId);
         ResultSet resultSet = prepareStatement.executeQuery();
         ArrayList<Tekniikka> tekniikat = new ArrayList<Tekniikka>();
         int haettava;
         while (resultSet.next()) {
-            haettava = resultSet.getInt("id");
+            haettava = resultSet.getInt("tekniikkaid");
             tekniikat.add(haeTekniikka(haettava));  //Haetaan 
         }
         return tekniikat;
@@ -123,6 +122,18 @@ public class TekniikkaDAO extends DBYhdistaja {
         Connection yhteys = yhdista();
         try {
             PreparedStatement prepareStatement = yhteys.prepareStatement("INSERT INTO tekniikka_judoka(judokaid,tekniikkaid) VALUES(?,?)");
+            prepareStatement.setInt(1, judokaId);
+            prepareStatement.setInt(2, tekniikkaId);
+            prepareStatement.execute();
+        } finally {
+            yhteys.close();
+        }
+    }
+
+    public void poistaTekniikkaJudokalta(int judokaId, int tekniikkaId) throws SQLException {
+        Connection yhteys = yhdista();
+        try {
+            PreparedStatement prepareStatement = yhteys.prepareStatement("DELETE FROM tekniikka_judoka WHERE judokaid = ? and tekniikkaid = ?");
             prepareStatement.setInt(1, judokaId);
             prepareStatement.setInt(2, tekniikkaId);
             prepareStatement.execute();
