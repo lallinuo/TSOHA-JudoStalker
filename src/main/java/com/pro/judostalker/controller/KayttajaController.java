@@ -7,6 +7,7 @@ package com.pro.judostalker.controller;
 import com.pro.judostalker.dao.KayttajaDAO;
 import com.pro.judostalker.model.Kayttaja;
 import com.pro.judostalker.model.Kirjautuminen;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.servlet.http.HttpSession;
@@ -35,13 +36,15 @@ public class KayttajaController {
     }
 
     @RequestMapping(value = "/kayttaja", method = RequestMethod.POST, headers = {"Content-type=application/json"})
-    public void lisaaKayttaja(@RequestBody Kayttaja kayttaja) throws SQLException {
-        kayttajaDAO.lisaaKayttaja(kayttaja);
+    public @ResponseBody
+    String lisaaKayttaja(@RequestBody Kayttaja kayttaja) throws SQLException, NoSuchAlgorithmException {
+        String error = kayttajaDAO.lisaaKayttaja(kayttaja);
+        return error;
     }
 
     @RequestMapping(value = "/kirjaudu", method = RequestMethod.POST)
     public @ResponseBody
-    Kayttaja kirjaudu(@RequestBody Kirjautuminen kirjautuminen, HttpSession session) throws SQLException {
+    Kayttaja kirjaudu(@RequestBody Kirjautuminen kirjautuminen, HttpSession session) throws SQLException, NoSuchAlgorithmException {
 
         Kayttaja kayttaja = kayttajaDAO.kirjaudu(kirjautuminen.getKayttajanimi(), kirjautuminen.getSalasana());
         if (kayttaja == null) {
@@ -55,10 +58,11 @@ public class KayttajaController {
     @RequestMapping(value = "/onKirjautunut", method = RequestMethod.GET)
     @ResponseBody
     public String onKirjautunut(HttpSession session) {
+        System.out.println("this is getting spammed");
         if (session.getAttribute("kirjautunut") != null) {
             return (String) session.getAttribute("kirjautunut");
         } else {
-            return null;
+            return "false";
         }
 
     }

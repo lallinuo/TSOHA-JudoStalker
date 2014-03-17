@@ -6,12 +6,15 @@ package com.pro.judostalker.dao;
 
 import com.pro.judostalker.model.Kayttaja;
 import com.pro.judostalker.model.Kayttaja;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import org.springframework.stereotype.Component;
+import org.springframework.util.DigestUtils;
 
 /**
  *
@@ -24,27 +27,32 @@ public class KayttajaDAO extends DBYhdistaja {
         super();
     }
 
-    public void lisaaKayttaja(Kayttaja kayttaja) throws SQLException {
+    public String lisaaKayttaja(Kayttaja kayttaja) throws SQLException, NoSuchAlgorithmException {
         Connection yhteys = yhdista();
-        PreparedStatement prepareStatement = yhteys.prepareStatement("INSERT INTO Kayttaja(kayttajanimi, salasana, etunimi, sukunimi) VALUES (?,?,?,?)");
-
-        prepareStatement.setString(1, kayttaja.getKayttajanimi());
-        prepareStatement.setString(2, kayttaja.getSalasana());
-        prepareStatement.setString(3, kayttaja.getEtunimi());
-        prepareStatement.setString(4, kayttaja.getSukunimi());
-        prepareStatement.execute();
-        yhteys.close();
+        try {
+            PreparedStatement prepareStatement = yhteys.prepareStatement("INSERT INTO Kayttaja(kayttajanimi, password, etunimi, sukunimi) VALUES (?,?,?,?)");
+            prepareStatement.setString(1, kayttaja.getKayttajanimi());
+            prepareStatement.setString(2, MD5.crypt(kayttaja.getSalasana()));
+            prepareStatement.setString(3, kayttaja.getEtunimi());
+            prepareStatement.setString(4, kayttaja.getSukunimi());
+            prepareStatement.execute();
+            return "";
+        } catch (Exception e) {
+            return "{\"error\":\"Käyttäjänimi on jo käytössä\"}";
+        } finally {
+            yhteys.close();
+        }
     }
-    
+
     //salasanaan tiiviste + suola 
-    public Kayttaja kirjaudu(String kayttajanimi, String salasana) throws SQLException {
+    public Kayttaja kirjaudu(String kayttajanimi, String salasana) throws SQLException, NoSuchAlgorithmException {
         Connection yhteys = yhdista();
         PreparedStatement prepareStatement = yhteys.prepareStatement("SELECT * FROM Kayttaja WHERE kayttajanimi = ? and password = ?");
         prepareStatement.setString(1, kayttajanimi);
-        prepareStatement.setString(2, salasana);
+        prepareStatement.setString(2, MD5.crypt(salasana));
         ResultSet tulos = prepareStatement.executeQuery();
         yhteys.close();
-        if(tulos.next()){
+        if (tulos.next()) {
             return luoKayttajaOlio(tulos);
         }
         return null;

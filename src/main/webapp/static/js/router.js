@@ -1,52 +1,191 @@
-/* 
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 judoStalker.config(function($stateProvider, $urlRouterProvider) {
+    $urlRouterProvider.otherwise("kirjaudu");
+    
     $stateProvider
+    .state('rekisteroidy',{
+        resolve:{
+            kirjautuminen : function(kayttajaService){
+                return kayttajaService.haeKayttaja()
+            }
+        },
+        url:"/rekisteroidy",
+        views:{
+            content: {
+                templateUrl: "/static/partials/rekisteroidy.html",
+                controller: 'rekisterointiCtrl'
+
+            }
+     
+        }
+    })
+
+    .state('login',{
+        resolve:{
+            kirjautuminen : function(kayttajaService){
+                return kayttajaService.haeKayttaja()
+            }
+        },
+        url:"/kirjaudu",
+        views:{
+            content: {
+                templateUrl: "/static/partials/login.html",
+                controller: 'loginCtrl'
+
+            }
+     
+        }
+    })
     .state('kayttajat', {
+        resolve:{
+            kirjautuminen : function(kayttajaService){
+                return kayttajaService.haeKayttaja()
+            }
+        },
         url: "/kayttajat",
-        templateUrl: "/static/partials/kayttajat.html",
-        controller: 'kayttajaCtrl'
+        views:{
+            content: {
+                templateUrl: "/static/partials/kayttajat.html",
+                controller: "kayttajaCtrl"
+               
+            },
+            nav: {
+                templateUrl: "/static/partials/nav.html",
+                controller: 'loginCtrl'
+
+            }
+        }
     })
 
     .state('judokat', {
+        resolve:{
+            kirjautuminen : function(kayttajaService){
+                return kayttajaService.haeKayttaja()
+            }
+        },
         url: "/judokat/",
-        templateUrl: "/static/partials/judoka/judokat.html",
-        controller: 'judokatCtrl'
+        views:{
+            content: {
+                templateUrl: "/static/partials/judoka/judokat.html",
+                controller: 'judokatCtrl'
+            },
+            nav:{
+                templateUrl: "/static/partials/nav.html",
+                controller: 'loginCtrl'
+            }
+       
+        }
     })
     
     .state('judoka',{
+        resolve:{
+            kirjautuminen : function(kayttajaService){
+                return kayttajaService.haeKayttaja()
+            }
+        },
         url: "/judokat/:id",
-        templateUrl:"/static/partials/judoka/judoka.html",
-        controller: 'judokaCtrl'
+        views:{
+            content: {
+                templateUrl:"/static/partials/judoka/judoka.html",
+                controller: 'judokaCtrl'
+            },
+            nav:{
+                templateUrl: "/static/partials/nav.html",
+                controller: 'loginCtrl'
+            }
+        }
+      
     })
     
     .state('lisaajudoka',{
+        resolve:{
+            kirjautuminen : function(kayttajaService){
+                return kayttajaService.haeKayttaja()
+            }
+        },
         url: "/judoka/lisaa",
-        templateUrl:"/static/partials/judoka/lisaajudoka.html",
-        controller: 'uusiJudokaCtrl'
+        views:{
+            content: {
+                templateUrl:"/static/partials/judoka/lisaajudoka.html",
+                controller: 'uusiJudokaCtrl'
+            },
+            nav:{
+                templateUrl: "/static/partials/nav.html",
+                controller: 'loginCtrl'
+            }
+        }
     })
     .state('muokkaa_judokaa',{
+        resolve:{
+            kirjautuminen : function(kayttajaService){
+                return kayttajaService.haeKayttaja()
+            }
+        },
         url:"/judokat/:id/editoi",
-        templateUrl:"/static/partials/judoka/editjudoka.html",
-        controller: 'judokaCtrl'
+        views:{
+            content: {
+                templateUrl:"/static/partials/judoka/editjudoka.html",
+                controller: 'judokaCtrl'
+            },
+            nav:{
+                templateUrl: "/static/partials/nav.html",
+                controller: 'loginCtrl'
+            }
+        }
     })
     
     .state('tekniikat', {
+        resolve:{
+            kirjautuminen : function(kayttajaService){
+                return kayttajaService.haeKayttaja()
+            }
+        },
         url: "/tekniikat",
-        templateUrl: "/static/partials/tekniikka/tekniikat.html",
-        controller: 'tekniikatCtrl'
+        views:{
+            content: {
+                templateUrl: "/static/partials/tekniikka/tekniikat.html",
+                controller: 'tekniikatCtrl'
+            },
+            nav:{
+                templateUrl: "/static/partials/nav.html",
+                controller: 'loginCtrl'
+            }
+        }
     })
     .state('tekniikka',{
+        resolve:{
+            kirjautuminen : function(kayttajaService){
+                return kayttajaService.haeKayttaja()
+            }
+        },
         url: "/tekniikat/:id",
-        templateUrl:"/static/partials/tekniikka/tekniikka.html",
-        controller: 'tekniikkaCtrl'
+        views:{
+            content: {
+                templateUrl:"/static/partials/tekniikka/tekniikka.html",
+                controller: 'tekniikkaCtrl'
+            },
+            nav:{
+                templateUrl: "/static/partials/nav.html",
+                controller: 'loginCtrl'
+            }
+        }
     })
     .state('lisaatekniikka',{
+        resolve:{
+            kirjautuminen : function(kayttajaService){
+                return kayttajaService.haeKayttaja()
+            }
+        },
         url:"/tekniikka/lisaa",
-        templateUrl:"/static/partials/tekniikka/lisaatekniikka.html",
-        controller: 'uusiTekniikkaCtrl'
+        views:{
+            content: {
+                templateUrl:"/static/partials/tekniikka/lisaatekniikka.html",
+                controller: 'uusiTekniikkaCtrl'
+            },
+            nav:{
+                templateUrl: "/static/partials/nav.html",
+                controller: 'loginCtrl'
+            }
+        }
     })
 });
 

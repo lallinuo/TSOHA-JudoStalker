@@ -1,0 +1,14 @@
+
+
+<div id="loginform">
+    <form class="pure-form" ng-submit="submit()" ng-show="!kirjautuminen" >
+        <fieldset class="pure-group">
+            <input type="text" ng-model="login.kayttajanimi" class="pure-input-1-2" placeholder="Käyttäjänimi">
+            <input type="password" ng-model="login.salasana" class="pure-input-1-2" placeholder="Salasana">
+        </fieldset>
+        <button type="submit" class="pure-button pure-input-1-2 pure-button-primary">Kirjaudu</button>
+      
+        <p class="error">{{error}}</p>
+    </form>
+
+        <a class="pure-button" ui-sref="rekisteroidy">Rekisteröidy</a><br/>

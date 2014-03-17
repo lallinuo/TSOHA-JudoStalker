@@ -1,0 +1,26 @@
+
+<form class="pure-form pure-form-aligned" ng-submit="rekisteroidy()">
+    <fieldset>
+        <div class="pure-control-group">
+            <label  for="name">Käyttäjänimi</label>
+            <input ng-model="form.kayttajanimi"  type="text" placeholder="Käyttäjänimi" required>
+        </div>
+        <div class="pure-control-group">
+            <label  for="name">Salasana</label>
+            <input ng-model="form.salasana"  type="password" placeholder="Salasana" required>
+        </div>
+     <div class="pure-control-group">
+            <label  for="name">Etunimi</label>
+            <input ng-model="form.etunimi"  type="text" placeholder="Etunimi" required>
+        </div>
+             <div class="pure-control-group">
+            <label  for="name">Sukunimi</label>
+            <input ng-model="form.sukunimi"  type="text" placeholder="Sukunimi" required>
+        </div>
+
+        <div class="pure-control-group">
+            <button type="submit" class="pure-button pure-button-primary">Rekisteröidy</button>
+        </div>
+    </fieldset>
+</form>
+        <p class="error">{{error}}</p>
