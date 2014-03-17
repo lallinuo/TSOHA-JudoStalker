@@ -31,8 +31,8 @@ judoStalkerControllers.controller('judokatCtrl', ["$scope", "Judoka","kirjautumi
     $scope.judokat = Judoka.query();
 }]);
 
-judoStalkerControllers.controller('judokaCtrl', ["$scope", "Judoka", "$stateParams", "$state", "$location", "Kommentti", "Tekniikka","kayttajaService",
-    function($scope, Judoka, $stateParams, $state, $location, Kommentti, Tekniikka,kayttajaService) {
+judoStalkerControllers.controller('judokaCtrl', ["$scope", "Judoka", "$stateParams", "$state", "$location", "Kommentti", "Tekniikka","kirjautuminen",
+    function($scope, Judoka, $stateParams, $state, $location, Kommentti, Tekniikka,kirjautuminen) {
         $scope.judoka = Judoka.get({}, {
             id: $stateParams.id
         });
@@ -63,7 +63,7 @@ judoStalkerControllers.controller('judokaCtrl', ["$scope", "Judoka", "$statePara
         }
         $scope.kommentoi = function() {
 
-            $scope.kommentti.kayttajaId = kayttajaService.haeKayttaja();
+            $scope.kommentti.kayttajaId = kirjautuminen;
             $scope.kommentti.judokaId = $scope.judoka.id;
             Kommentti.save(JSON.stringify($scope.kommentti), function(data) {
                 $scope.message = "Viesti lähetetty";
