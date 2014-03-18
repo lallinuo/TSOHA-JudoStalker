@@ -1,0 +1,5 @@
+- kommenttien sorttaus fiksummin
+- keskitykset
+- db fiksummin
+- suojaus ettei loggaamaton käyttäjä saa tietoja
+- käyttäjien salasanan vaihto/editointi
