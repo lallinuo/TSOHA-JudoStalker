@@ -1,0 +1,1 @@
+INSERT INTO Kayttaja(kayttajanimi,password,etunimi,sukunimi) values('wadap','wadap','lalli','nuorteva');
