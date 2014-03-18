@@ -25,66 +25,87 @@ public class JudokaDAO extends DBYhdistaja {
 
     public Judoka lisaaJudoka(Judoka judoka) throws SQLException {
         Connection yhteys = yhdista();
-        PreparedStatement prepareStatement = yhteys.prepareStatement("INSERT INTO Judoka(etunimi, sukunimi, painoluokka, sukupuoli,maa) VALUES (?,?,?,?,?)");
-        prepareStatement.setString(1, judoka.getEtunimi());
-        prepareStatement.setString(2, judoka.getSukunimi());
-        prepareStatement.setString(3, judoka.getPainoluokka());
-        prepareStatement.setString(4, judoka.getSukupuoli());
-        prepareStatement.setString(5, judoka.getMaa());
-        prepareStatement.execute();
-        prepareStatement = yhteys.prepareStatement("SELECT max(id) as max from Judoka");
-        ResultSet tulos = prepareStatement.executeQuery();
-        tulos.next();
-        judoka.setId(tulos.getInt("max"));
-        yhteys.close();
-        return judoka;
+        try {
+            PreparedStatement prepareStatement = yhteys.prepareStatement("INSERT INTO Judoka(etunimi, sukunimi, painoluokka, sukupuoli,maa) VALUES (?,?,?,?,?)");
+            prepareStatement.setString(1, judoka.getEtunimi());
+            prepareStatement.setString(2, judoka.getSukunimi());
+            prepareStatement.setString(3, judoka.getPainoluokka());
+            prepareStatement.setString(4, judoka.getSukupuoli());
+            prepareStatement.setString(5, judoka.getMaa());
+            prepareStatement.execute();
+            prepareStatement = yhteys.prepareStatement("SELECT max(id) as max from Judoka");
+            ResultSet tulos = prepareStatement.executeQuery();
+            tulos.next();
+            judoka.setId(tulos.getInt("max"));
+            yhteys.close();
+            return judoka;
+
+        } finally {
+            yhteys.close();
+        }
+
     }
 
     public Judoka haeJudoka(int id) throws SQLException {
+
         Connection yhteys = yhdista();
-        PreparedStatement prepareStatement = yhteys.prepareStatement("SELECT * FROM Judoka WHERE id = ?");
-        prepareStatement.setInt(1, id);
-        ResultSet tulos = prepareStatement.executeQuery();
-        yhteys.close();
-        if (tulos.next()) {
-            return luoJudokaOlio(tulos);
+        try {
+            PreparedStatement prepareStatement = yhteys.prepareStatement("SELECT * FROM Judoka WHERE id = ?");
+            prepareStatement.setInt(1, id);
+            ResultSet tulos = prepareStatement.executeQuery();
+            yhteys.close();
+            if (tulos.next()) {
+                return luoJudokaOlio(tulos);
+            }
+            return null;
+        } finally {
+            yhteys.close();
         }
-        return null;
     }
 
     public void paivitaJudoka(Judoka judoka) throws SQLException {
-        
+
         Connection yhteys = yhdista();
-        PreparedStatement prepareStatement = yhteys.prepareStatement("UPDATE Judoka SET etunimi = ?, sukunimi = ?, painoluokka = ?, sukupuoli = ?, maa = ? WHERE id = ?");
-        prepareStatement.setString(1, judoka.getEtunimi());
-        prepareStatement.setString(2, judoka.getSukunimi());
-        prepareStatement.setString(3, judoka.getPainoluokka());
-        prepareStatement.setString(4, judoka.getSukupuoli());
-        prepareStatement.setString(5, judoka.getMaa());
-        prepareStatement.setInt(6, judoka.getId());
-        prepareStatement.execute();
-        yhteys.close();
+        try {
+            PreparedStatement prepareStatement = yhteys.prepareStatement("UPDATE Judoka SET etunimi = ?, sukunimi = ?, painoluokka = ?, sukupuoli = ?, maa = ? WHERE id = ?");
+            prepareStatement.setString(1, judoka.getEtunimi());
+            prepareStatement.setString(2, judoka.getSukunimi());
+            prepareStatement.setString(3, judoka.getPainoluokka());
+            prepareStatement.setString(4, judoka.getSukupuoli());
+            prepareStatement.setString(5, judoka.getMaa());
+            prepareStatement.setInt(6, judoka.getId());
+            prepareStatement.execute();
+        } finally {
+            yhteys.close();
+        }
     }
 
     public void poistaJudoka(int id) throws SQLException {
         Connection yhteys = yhdista();
-        PreparedStatement prepareStatement = yhteys.prepareStatement("DELETE FROM Judoka WHERE id = ?");
-        prepareStatement.setInt(1, id);
-        prepareStatement.execute();
-        yhteys.close();
-
+        try {
+            PreparedStatement prepareStatement = yhteys.prepareStatement("DELETE FROM Judoka WHERE id = ?");
+            prepareStatement.setInt(1, id);
+            prepareStatement.execute();
+        } finally {
+            yhteys.close();
+        }
     }
 
     public ArrayList<Judoka> haeKaikkiJudokat() throws SQLException {
-        ArrayList<Judoka> judokat = new ArrayList<Judoka>();
         Connection yhteys = yhdista();
-        PreparedStatement prepareStatement = yhteys.prepareStatement("SELECT * FROM Judoka");
-        ResultSet tulos = prepareStatement.executeQuery();
-        while (tulos.next()) {
-            judokat.add(luoJudokaOlio(tulos));
-        }
+        try {
+            ArrayList<Judoka> judokat = new ArrayList<Judoka>();
 
-        return judokat;
+            PreparedStatement prepareStatement = yhteys.prepareStatement("SELECT * FROM Judoka");
+            ResultSet tulos = prepareStatement.executeQuery();
+            while (tulos.next()) {
+                judokat.add(luoJudokaOlio(tulos));
+            }
+
+            return judokat;
+        } finally {
+            yhteys.close();
+        }
     }
 
     public Judoka luoJudokaOlio(ResultSet tulos) throws SQLException {
@@ -95,7 +116,6 @@ public class JudokaDAO extends DBYhdistaja {
         judoka.setPainoluokka(tulos.getString("painoluokka"));
         judoka.setSukupuoli(tulos.getString("sukupuoli"));
         judoka.setId(tulos.getInt("id"));
-
         return judoka;
     }
 
