@@ -1,5 +1,5 @@
 judoStalkerServices.factory('Kayttaja', ['$resource', function($resource) {
-        return $resource('/kayttaja', {}, {
+        return $resource('/kayttaja/:id', {id:"@id"}, {
         });
     }]);
 

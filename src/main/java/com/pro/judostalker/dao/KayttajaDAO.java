@@ -84,7 +84,8 @@ public class KayttajaDAO extends DBYhdistaja {
         Connection yhteys = yhdista();
         PreparedStatement prepareStatement = yhteys.prepareStatement("DELETE FROM Kayttaja WHERE id = ?");
         prepareStatement.setInt(1, id);
-        ResultSet tulos = prepareStatement.executeQuery();
+        prepareStatement.execute();
+        yhteys.close();
     }
 
     public ArrayList<Kayttaja> haeKaikkiKayttajat() throws SQLException {

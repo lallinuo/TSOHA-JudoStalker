@@ -82,8 +82,10 @@ public class KayttajaController {
 
     @RequestMapping(value = "/kayttaja/{id}", method = RequestMethod.DELETE)
     public @ResponseBody
-    void poistaKayttaja(@RequestBody Kayttaja kayttaja) throws SQLException {
-        kayttajaDAO.poistaKayttaja(kayttaja.getId());
+    void poistaKayttaja(@PathVariable int id, HttpSession session) throws SQLException {
+        if (((String)session.getAttribute("kirjautunut")).equals(id+"")) {
+            kayttajaDAO.poistaKayttaja(id);
+        }
 
     }
 

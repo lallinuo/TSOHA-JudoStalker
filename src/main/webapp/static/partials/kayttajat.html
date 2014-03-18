@@ -4,6 +4,6 @@ and open the template in the editor.
 -->
 <div id ="kayttajat">
     <h1>Käyttäjät</h1>
-    <a href="#" ng-repeat-start="kayttaja in kayttajat">{{kayttaja.kayttajanimi}}</a><br ng-repeat-end/>
+    <a ui-sref="kayttaja({id:kayttaja.id})" ng-repeat-start="kayttaja in kayttajat">{{kayttaja.kayttajanimi}}</a><br ng-repeat-end/>
 
 </div>

@@ -121,6 +121,26 @@ judoStalkerControllers.controller('rekisterointiCtrl', ["$scope", "Kayttaja", "$
     }
 }]);
 
+judoStalkerControllers.controller('kayttajaCtrl',["$scope","Kayttaja","$stateParams","kirjautuminen","$http","$location",function($scope,Kayttaja,$stateParams,kirjautuminen,$http,$location){
+    $scope.kayttaja = Kayttaja.get({
+        id:$stateParams.id
+        })
+    console.log(kirjautuminen);
+    if($stateParams.id == kirjautuminen){
+        $scope.poisto = true;
+    }
+    
+    $scope.poistaKayttaja = function(){
+        $scope.kayttaja.$delete();
+        $http({
+            method: 'GET',
+            url: '/logout'
+        }).success(function() {
+            $location.path("kirjaudu/")
+        })
+    }
+}]);
+
 judoStalkerControllers.controller('uusiJudokaCtrl', ["$scope", "Judoka", "$location", function($scope, Judoka, $location) {
     $scope.lisaaJudoka = function() {
         Judoka.save(JSON.stringify($scope.form), function(data) {
@@ -129,7 +149,7 @@ judoStalkerControllers.controller('uusiJudokaCtrl', ["$scope", "Judoka", "$locat
     }
 }]);
 
-judoStalkerControllers.controller('kayttajaCtrl', ["$scope", "Kayttaja", function($scope, Kayttaja) {
+judoStalkerControllers.controller('kayttajatCtrl', ["$scope", "Kayttaja", function($scope, Kayttaja) {
     $scope.kayttajat = Kayttaja.query();
 }]);
 
