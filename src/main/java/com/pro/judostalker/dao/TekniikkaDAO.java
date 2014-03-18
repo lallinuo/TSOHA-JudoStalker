@@ -32,9 +32,10 @@ public class TekniikkaDAO extends DBYhdistaja {
             ResultSet tulos = prepareStatement.executeQuery();
             tulos.next();
             tekniikka.setID(tulos.getInt("id"));
-            yhteys.close();
-        } finally {
             return tekniikka;
+
+        } finally {
+            yhteys.close();
         }
     }
 
@@ -103,7 +104,9 @@ public class TekniikkaDAO extends DBYhdistaja {
     }
 
     public ArrayList<Tekniikka> haeJudokanTekniikat(int judokaId) throws SQLException {
+        
         Connection yhteys = yhdista();
+        try{
         PreparedStatement prepareStatement = yhteys.prepareStatement("SELECT tekniikkaid FROM tekniikka_judoka WHERE judokaid = ?");
         prepareStatement.setInt(1, judokaId);
         ResultSet resultSet = prepareStatement.executeQuery();
@@ -114,6 +117,9 @@ public class TekniikkaDAO extends DBYhdistaja {
             tekniikat.add(haeTekniikka(haettava));  //Haetaan 
         }
         return tekniikat;
+        }finally{
+            yhteys.close();
+        }
 
 
     }
