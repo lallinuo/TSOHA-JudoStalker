@@ -6,6 +6,7 @@
     </head>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/style.css" type="text/css" /> 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/pure-min.css" type="text/css" /> 
+    <link href='http://fonts.googleapis.com/css?family=Ubuntu+Mono' rel='stylesheet' type='text/css'>
     <script src= "${pageContext.request.contextPath}/static/js/angular.min.js"></script>
     <script src= "${pageContext.request.contextPath}/static/js/angular-ui-router.min.js"></script>
     <script src= "${pageContext.request.contextPath}/static/js/angular-resource.min.js"></script>

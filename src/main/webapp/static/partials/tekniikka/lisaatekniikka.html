@@ -1,16 +1,20 @@
-<!--
-To change this template, choose Tools | Templates
-and open the template in the editor.
--->
-<h1>Lisää </h1>
-<form class="pure-form pure-form-aligned" ng-submit="lisaaTekniikka()">
-    <fieldset>
-        <div class="pure-control-group">
-            <label  for="name">Tekniikan nimi</label>
-            <input ng-model="form.nimi"  type="text" placeholder="Nimi" required>
-        </div>
-        <div class="pure-control-group">
-            <button type="submit" class="pure-button pure-button-primary">Lisää tekniikka</button>
-        </div>
-    </fieldset>
-</form>
+<div class="pure-g">
+    <div class="pure-u-1-3">
+    </div>
+    <div class="pure-u-1-3">
+        <h1>Lisää </h1>
+        <form class="pure-form pure-form-aligned" ng-submit="lisaaTekniikka()">
+            <fieldset>
+                <div class="pure-control-group">
+                    <label  for="name">Tekniikan nimi</label>
+                    <input ng-model="form.nimi"  type="text" placeholder="Nimi" required>
+                </div>
+                <div class="pure-control-group">
+                    <button type="submit" class="pure-button pure-button-primary">Lisää tekniikka</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+    <div class="pure-u-1-3">
+    </div>
+</div>

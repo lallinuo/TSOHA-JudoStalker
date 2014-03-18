@@ -4,16 +4,27 @@
 .success{
     color: green;
 }
-#menu{
-    background-color: #FFF;
-}
-body{
+#nav{
     background-color: lightblue;
 }
+body{
+    background-color: #FFF;
+}
+
 
 a{
     cursor: pointer;
     color: blue;
     text-decoration:underline;
 }
+h1{
+    color: #414141;
+    text-align: center;
+}
+p{
+    color: #414141;
+}
 
+.content{
+    margin-top: 3%;
+}

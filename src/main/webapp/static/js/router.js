@@ -14,6 +14,10 @@ judoStalker.config(function($stateProvider, $urlRouterProvider) {
                 templateUrl: "/static/partials/rekisteroidy.html",
                 controller: 'rekisterointiCtrl'
 
+            },
+            nav: {
+                templateUrl: "/static/partials/nav.html",
+                controller: "loginCtrl"
             }
      
         }
@@ -30,7 +34,10 @@ judoStalker.config(function($stateProvider, $urlRouterProvider) {
             content: {
                 templateUrl: "/static/partials/login.html",
                 controller: 'loginCtrl'
-
+            },
+            nav: {
+                templateUrl: "/static/partials/nav.html",
+                controller: "loginCtrl"
             }
      
         }

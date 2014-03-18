@@ -2,51 +2,57 @@
 To change this template, choose Tools | Templates
 and open the template in the editor.
 -->
-<div id="judoka">
-    <h1>{{judoka.etunimi}} {{judoka.sukunimi}}</h1>
-</div>
-<p><b>Sukupuoli:</b> {{judoka.sukupuoli}}</p>
-<p><b>Maa:</b> {{judoka.maa}}</p>
-<p><b>Painoluokka:</b> {{judoka.painoluokka}}</p>
-<p><b>Tekniikat: </b></p>
-<ul>
-    <li ng-repeat="tekniikka in judokanTekniikat"> {{tekniikka.nimi}}  [<a ng-click="poistaTekniikka(tekniikka,judoka)">Poista</a>]</li>
-</ul>
 
-<a class="pure-button" ui-sref="muokkaa_judokaa({id:judoka.id})">Muokkaa</a>
-<a class="pure-button" ng-click="poistaJudoka()">Poista</a>
-<hr/>
-
-<select ng-model="valittuTekniikka" ng-options="tekniikka.nimi for tekniikka in tekniikat"></select>
-
-<a class="pure-button" ng-click="lisaaTekniikka({id:judoka.id})">Lisää tekniikka</a>
-
-<br/>
-<hr/>
-
-<form class="pure-form pure-form-aligned" ng-submit="kommentoi()">
-    <fieldset>
-        <div class="pure-control-group">
-            <textarea ng-model="kommentti.kommentti" type="text" rows="10" cols="60" placeholder="Lisää judokaan liittyvä huomio" required></textarea>
+<div class="pure-g">
+    <div class="pure-u-1-2">
+        <div id="judoka">
+            <h1>{{judoka.etunimi}} {{judoka.sukunimi}}</h1>
         </div>
+        <p><b>Sukupuoli:</b> {{judoka.sukupuoli}}</p>
+        <p><b>Maa:</b> {{judoka.maa}}</p>
+        <p><b>Painoluokka:</b> {{judoka.painoluokka}}</p>
+        <p><b>Tekniikat: </b></p>
+        <ul>
+            <li ng-repeat="tekniikka in judokanTekniikat"> {{tekniikka.nimi}}  [<a ng-click="poistaTekniikka(tekniikka,judoka)">Poista</a>]</li>
+        </ul>
+
+        <a class="pure-button" ui-sref="muokkaa_judokaa({id:judoka.id})">Muokkaa</a>
+        <a class="pure-button" ng-click="poistaJudoka()">Poista</a>
+        <br/>
+        <br/>
+        <select ng-model="valittuTekniikka" ng-options="tekniikka.nimi for tekniikka in tekniikat"></select>
+
+        <a class="pure-button" ng-click="lisaaTekniikka({id:judoka.id})">Lisää tekniikka</a>
+
+
+    </div>
+    <div class="pure-u-1-2">
+        <h1>Kommentoi judokaa</h1>
+        <form class="pure-form pure-form-aligned" ng-submit="kommentoi()">
+            <fieldset>
+                <div class="pure-control-group">
+                    <textarea ng-model="kommentti.kommentti" type="text" rows="10" cols="60" placeholder="Lisää judokaan liittyvä huomio" required></textarea>
+                </div>
 
 
 
-        <div class="pure-controls">
+                <div class="pure-controls">
 
-            <button type="submit" class="pure-button pure-button-primary">Lähetä</button>
+                    <button type="submit" class="pure-button pure-button-primary">Lähetä</button>
 
+                </div>
+                <p class="success">{{message}}</p>
+            </fieldset>
+        </form>
+
+        <div ng-repeat="kommentti in kommentit | orderBy:kommentti.id" class="kommentti">
+            <hr/>
+            <b>{{kommentti.lahettaja}} | {{kommentti.pvm}} | <a ng-click="poistaKommentti(kommentti)">Poista</a> | <a  ng-click="avaaEditointi(kommentti)">Editoi</a> </b><br/>
+            <p ng-show="!kommentti.editointi"> {{kommentti.kommentti}} </p>
+            <div ng-show="kommentti.editointi" id="editointi">
+                <textarea  rows="8" cols="60" ng-model="kommentti.kommentti">  </textarea><br/>
+                <button type="submit" class="pure-button pure-button-primary" ng-click="editoi(kommentti)">Tallenna</button>
+            </div>
         </div>
-        <p class="success">{{message}}</p>
-    </fieldset>
-</form>
-
-<div ng-repeat="kommentti in kommentit | orderBy:kommentti.id" class="kommentti">
-    <hr/>
-    <b>{{kommentti.lahettaja}} | {{kommentti.pvm}} | <a ng-click="poistaKommentti(kommentti)">Poista</a> | <a  ng-click="avaaEditointi(kommentti)">Editoi</a> </b><br/>
-    <p ng-show="!kommentti.editointi"> {{kommentti.kommentti}} </p>
-    <div ng-show="kommentti.editointi" id="editointi">
-        <textarea  rows="8" cols="60" ng-model="kommentti.kommentti">  </textarea><br/>
-        <button type="submit" class="pure-button pure-button-primary" ng-click="editoi(kommentti)">Tallenna</button>
     </div>
 </div>
