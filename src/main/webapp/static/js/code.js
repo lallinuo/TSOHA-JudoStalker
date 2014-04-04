@@ -134,7 +134,7 @@ judoStalkerControllers.controller('kayttajaCtrl',["$scope","Kayttaja","$statePar
         $scope.kayttaja.$delete();
         $http({
             method: 'GET',
-            url: '/logout'
+            url: '/'
         }).success(function() {
             $location.path("kirjaudu/")
         })

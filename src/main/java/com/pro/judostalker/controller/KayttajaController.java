@@ -7,6 +7,7 @@ package com.pro.judostalker.controller;
 import com.pro.judostalker.dao.KayttajaDAO;
 import com.pro.judostalker.model.Kayttaja;
 import com.pro.judostalker.model.Kirjautuminen;
+import com.pro.judostalker.service.AuthService;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -28,11 +29,16 @@ public class KayttajaController {
 
     @Autowired
     private KayttajaDAO kayttajaDAO;
+    @Autowired
+    private AuthService authService;
 
     @RequestMapping(value = "/kayttaja", method = RequestMethod.GET)
     public @ResponseBody
-    ArrayList<Kayttaja> haeKaikkiKayttajat() throws SQLException {
-        return kayttajaDAO.haeKaikkiKayttajat();
+    ArrayList<Kayttaja> haeKaikkiKayttajat(HttpSession session) throws SQLException {
+        if (authService.isLogged(session)) {
+            return kayttajaDAO.haeKaikkiKayttajat();
+        }
+        return null;
     }
 
     @RequestMapping(value = "/kayttaja", method = RequestMethod.POST, headers = {"Content-type=application/json"})
@@ -50,6 +56,8 @@ public class KayttajaController {
         if (kayttaja == null) {
             return null;
         } else {
+            System.out.println("session set");
+            System.out.println(kayttaja.getId() + " = tallennettu id");
             session.setAttribute("kirjautunut", kayttaja.getId() + "");
             return kayttaja;
         }
@@ -58,7 +66,6 @@ public class KayttajaController {
     @RequestMapping(value = "/onKirjautunut", method = RequestMethod.GET)
     @ResponseBody
     public String onKirjautunut(HttpSession session) {
-        System.out.println("this is getting spammed");
         if (session.getAttribute("kirjautunut") != null) {
             return (String) session.getAttribute("kirjautunut");
         } else {
@@ -75,24 +82,27 @@ public class KayttajaController {
 
     @RequestMapping(value = "/kayttaja/{id}", method = RequestMethod.GET)
     public @ResponseBody
-    Kayttaja haeKayttaja(@PathVariable int id) throws SQLException {
-
-        return kayttajaDAO.haeKayttaja(id);
+    Kayttaja haeKayttaja(@PathVariable int id, HttpSession session) throws SQLException {
+        if (authService.isLogged(session)) {
+            return kayttajaDAO.haeKayttaja(id);
+        }
+        return null;
     }
 
     @RequestMapping(value = "/kayttaja/{id}", method = RequestMethod.DELETE)
     public @ResponseBody
     void poistaKayttaja(@PathVariable int id, HttpSession session) throws SQLException {
-        if (((String)session.getAttribute("kirjautunut")).equals(id+"")) {
+        if (authService.isLoggedWithId(session, id)) {
             kayttajaDAO.poistaKayttaja(id);
+            session.invalidate();
         }
-
     }
 
     @RequestMapping(value = "/kayttaja/{id}", method = RequestMethod.PUT)
     public @ResponseBody
-    void paivitaKayttaja(@RequestBody Kayttaja kayttaja) throws SQLException {
-        kayttajaDAO.paivitaKayttaja(kayttaja);
-
+    void paivitaKayttaja(@RequestBody Kayttaja kayttaja, @PathVariable int id, HttpSession session) throws SQLException {
+        if (authService.isLoggedWithId(session, id)) {
+            kayttajaDAO.paivitaKayttaja(kayttaja);
+        }
     }
 }

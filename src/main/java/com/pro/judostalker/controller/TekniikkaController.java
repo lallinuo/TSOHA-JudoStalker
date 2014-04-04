@@ -6,8 +6,10 @@ package com.pro.judostalker.controller;
 
 import com.pro.judostalker.dao.TekniikkaDAO;
 import com.pro.judostalker.model.Tekniikka;
+import com.pro.judostalker.service.AuthService;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,56 +27,78 @@ public class TekniikkaController {
 
     @Autowired
     private TekniikkaDAO tekniikkaDAO;
+    @Autowired
+    private AuthService authService;
 
     @RequestMapping(value = "/tekniikka", method = RequestMethod.GET)
     public @ResponseBody
-    ArrayList<Tekniikka> haeKaikkiTekniikat() throws SQLException {
-        return tekniikkaDAO.haeKaikkiTekniikat();
+    ArrayList<Tekniikka> haeKaikkiTekniikat(HttpSession session) throws SQLException {
+        if (authService.isLogged(session)) {
+            return tekniikkaDAO.haeKaikkiTekniikat();
+        }
+        return null;
 
     }
 
     @RequestMapping(value = "/tekniikka/{judokaId}/{tekniikkaId}", method = RequestMethod.POST)
     public @ResponseBody
-    void lisaaTekniikkaJudokalle(@PathVariable int judokaId, @PathVariable int tekniikkaId) throws SQLException {
-        tekniikkaDAO.lisaaTekniikkaJudokalle(judokaId, tekniikkaId);
+    void lisaaTekniikkaJudokalle(@PathVariable int judokaId, @PathVariable int tekniikkaId, HttpSession session) throws SQLException {
+        if (authService.isLogged(session)) {
+            tekniikkaDAO.lisaaTekniikkaJudokalle(judokaId, tekniikkaId);
+        }
     }
 
     @RequestMapping(value = "/tekniikka", method = RequestMethod.POST, headers = {"Content-type=application/json"})
     public @ResponseBody
-    Tekniikka lisaaTekniikka(@RequestBody Tekniikka tekniikka) throws SQLException {
-        return tekniikkaDAO.lisaaTekniikka(tekniikka);
+    Tekniikka lisaaTekniikka(@RequestBody Tekniikka tekniikka, HttpSession session) throws SQLException {
+        if (authService.isLogged(session)) {
+            return tekniikkaDAO.lisaaTekniikka(tekniikka);
+        }
+        return null;
     }
 
     @RequestMapping(value = "/tekniikka/{id}", method = RequestMethod.GET)
     public @ResponseBody
-    Tekniikka haeTekniikka(@PathVariable int id) throws SQLException {
-
-        return tekniikkaDAO.haeTekniikka(id);
+    Tekniikka haeTekniikka(@PathVariable int id, HttpSession session) throws SQLException {
+        if (authService.isLogged(session)) {
+            return tekniikkaDAO.haeTekniikka(id);
+        }
+        return null;
     }
 
     @RequestMapping(value = "/tekniikka/judoka/{judokaId}", method = RequestMethod.GET)
     public @ResponseBody
-    ArrayList<Tekniikka> haeJudokanTekniikat(@PathVariable int judokaId) throws SQLException {
-        return tekniikkaDAO.haeJudokanTekniikat(judokaId);
+    ArrayList<Tekniikka> haeJudokanTekniikat(@PathVariable int judokaId, HttpSession session) throws SQLException {
+        if (authService.isLogged(session)) {
+            return tekniikkaDAO.haeJudokanTekniikat(judokaId);
+        }
+        return null;
 
     }
 
     @RequestMapping(value = "/tekniikka/{id}", method = RequestMethod.DELETE)
     public @ResponseBody
-    void poistaTekniikka(@RequestBody Tekniikka tekniikka) throws SQLException {
-        tekniikkaDAO.poistaTekniikka(tekniikka.getID());
+    void poistaTekniikka(@RequestBody Tekniikka tekniikka, HttpSession session) throws SQLException {
+        if (authService.isLogged(session)) {
+            tekniikkaDAO.poistaTekniikka(tekniikka.getID());
+        }
 
     }
 
     @RequestMapping(value = "/tekniikka/{id}", method = RequestMethod.PUT)
     public @ResponseBody
-    void paivitaTekniikka(@RequestBody Tekniikka tekniikka) throws SQLException {
-        tekniikkaDAO.paivitaTekniikka(tekniikka);
+    void paivitaTekniikka(@RequestBody Tekniikka tekniikka, HttpSession session) throws SQLException {
+        if (authService.isLogged(session)) {
+            tekniikkaDAO.paivitaTekniikka(tekniikka);
+        }
     }
-    
-    @RequestMapping(value="/tekniikka/{judokaId}/{tekniikkaId}", method = RequestMethod.DELETE)
-    public @ResponseBody 
-    void poistaTekniikkaJudokalta(@PathVariable int judokaId, @PathVariable int tekniikkaId) throws SQLException{
-        tekniikkaDAO.poistaTekniikkaJudokalta(judokaId,tekniikkaId);
+
+    @RequestMapping(value = "/tekniikka/{judokaId}/{tekniikkaId}", method = RequestMethod.DELETE)
+    public @ResponseBody
+    void poistaTekniikkaJudokalta(@PathVariable int judokaId,
+            @PathVariable int tekniikkaId, HttpSession session) throws SQLException {
+        if (authService.isLogged(session)) {
+            tekniikkaDAO.poistaTekniikkaJudokalta(judokaId, tekniikkaId);
+        }
     }
 }

@@ -6,6 +6,7 @@ package com.pro.judostalker.controller;
 
 import com.pro.judostalker.dao.JudokaDAO;
 import com.pro.judostalker.model.Judoka;
+import com.pro.judostalker.service.AuthService;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.servlet.http.HttpSession;
@@ -27,47 +28,59 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class JudokaController {
 
     @Autowired
+    private AuthService authService;
+    @Autowired
     private JudokaDAO judokaDAO;
 
     @RequestMapping(value = "/judoka", method = RequestMethod.GET)
     public @ResponseBody
-    ArrayList<Judoka> haeKaikkiJudokat() throws SQLException {
-        return judokaDAO.haeKaikkiJudokat();
+    ArrayList<Judoka> haeKaikkiJudokat(HttpSession session) throws SQLException {
+        if (authService.isLogged(session)) {
+            return judokaDAO.haeKaikkiJudokat();
+        }
+        return null;
     }
 
     @ResponseStatus(value = HttpStatus.OK)
     @RequestMapping(value = "/judoka/{id}", method = RequestMethod.DELETE)
-    public void poistaJudoka(@PathVariable int id) throws SQLException {
-        judokaDAO.poistaJudoka(id);
+    public void poistaJudoka(@PathVariable int id, HttpSession session) throws SQLException {
+        if (authService.isLogged(session)) {
+            judokaDAO.poistaJudoka(id);
+        }
     }
 
-    @RequestMapping(value="/judoka/tekniikka/{tekniikkaId}", method = RequestMethod.GET)
-    public @ResponseBody ArrayList<Judoka> haeTekniikkaaKayttavatJudokat(@PathVariable int tekniikkaId) throws SQLException{
-        return judokaDAO.haeTekniikkaaKayttavatJudokat(tekniikkaId);
-        
+    @RequestMapping(value = "/judoka/tekniikka/{tekniikkaId}", method = RequestMethod.GET)
+    public @ResponseBody
+    ArrayList<Judoka> haeTekniikkaaKayttavatJudokat(@PathVariable int tekniikkaId, HttpSession session) throws SQLException {
+        if (authService.isLogged(session)) {
+            return judokaDAO.haeTekniikkaaKayttavatJudokat(tekniikkaId);
+        }
+        return null;
     }
 
     @RequestMapping(value = "/judoka/{id}", method = RequestMethod.GET)
     public @ResponseBody
     Judoka haeJudoka(@PathVariable int id, HttpSession session) throws SQLException {
-        if (session.getAttribute("kirjautunut") != null) {
-            System.out.println("attribute found");
+        if (authService.isLogged(session)) {
             return judokaDAO.haeJudoka(id);
-        } else {
-            return null;
         }
-
+        return null;
     }
 
     @RequestMapping(value = "/judoka", method = RequestMethod.POST)
     public @ResponseBody
-    Judoka lisaaJudoka(@RequestBody Judoka judoka) throws SQLException {
-        return judokaDAO.lisaaJudoka(judoka);
+    Judoka lisaaJudoka(@RequestBody Judoka judoka, HttpSession session) throws SQLException {
+        if (authService.isLogged(session)) {
+            return judokaDAO.lisaaJudoka(judoka);
+        }
+        return null;
     }
 
     @RequestMapping(value = "/judoka/{id}", method = RequestMethod.PUT)
     public @ResponseBody
-    void paivitaJudoka(@RequestBody Judoka judoka) throws SQLException {
-        judokaDAO.paivitaJudoka(judoka);
+    void paivitaJudoka(@RequestBody Judoka judoka, HttpSession session) throws SQLException {
+        if (authService.isLogged(session)) {
+            judokaDAO.paivitaJudoka(judoka);
+        }
     }
 }
