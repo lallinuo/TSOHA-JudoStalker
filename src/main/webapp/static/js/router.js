@@ -69,7 +69,7 @@ judoStalker.config(function($stateProvider, $urlRouterProvider) {
                 return kayttajaService.haeKayttaja()
             }
         },
-        url: "/judokat/",
+        url: "/judokat/:id",
         views:{
             content: {
                 templateUrl: "/static/partials/judoka/judokat.html",
@@ -92,8 +92,8 @@ judoStalker.config(function($stateProvider, $urlRouterProvider) {
         url: "/judokat/:id",
         views:{
             content: {
-                templateUrl:"/static/partials/judoka/judoka.html",
-                controller: 'judokaCtrl'
+                templateUrl:"/static/partials/judoka/judokat.html",
+                controller: 'judokatCtrl',
             },
             nav:{
                 templateUrl: "/static/partials/nav.html",

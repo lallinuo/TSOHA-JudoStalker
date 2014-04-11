@@ -9,6 +9,7 @@
     color: green;
 }
 
+
 .heading{
     text-align: center;
 }
@@ -54,6 +55,20 @@ h1{
     text-align: center;
 }
 
+#judokat{
+    margin-right: 20px !important;
+}
+
+#container{
+    min-width: 1024px;
+}
+
+#haku{
+    width: 100%;
+}
+#judokatable{
+    width: 100%;
+}
 #judokatable a{
     color:black;
 }
