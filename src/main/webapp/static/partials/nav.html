@@ -1,17 +1,15 @@
-<div class="pure-menu pure-menu-open pure-menu-horizontal" id="nav">
-    <a class="pure-menu-heading">JudoStalker</a>
-
-    <ul ng-show="!kirjautuminen">
-        <li><a ui-sref="login" >Kirjaudu</a></li>
-        <li><a ui-sref="rekisteroidy" >Rekisteröidy</a></li>
-    </ul>
-    <ul ng-show="kirjautuminen">
-        <li><a ui-sref="kayttajat">Käyttäjät</a></li>
-        <li><a ui-sref="judokat">Judokat</a></li>
-        <li><a ui-sref="tekniikat">Tekniikat</a></li>
-        <li><a ui-sref="lisaajudoka">+Lisää judoka</a></li>
-        <li><a ui-sref="lisaatekniikka">+Lisää tekniikka</a></li>
-        <li><a ng-click="logout()" class="nav_logout">Kirjaudu ulos</a></li>
-
-    </ul>
+<div  id="nav">
+        <h1 id="logo">JudoStalker</h1>
+        <div ng-show="!kirjautuminen">
+            <a ui-sref="login">Kirjaudu</a>
+            <a ui-sref="rekisteroidy">Rekisteröidy</a>
+        </div>
+        <div ng-show="kirjautuminen">
+            <a ui-sref="kayttajat">Käyttäjät</a>
+            <a ui-sref="judokat">Judokat</a>
+            <a ui-sref="tekniikat">Tekniikat</a>
+            <a ui-sref="lisaajudoka">+Lisää judoka</a>
+            <a ui-sref="lisaatekniikka">+Lisää tekniikka</a>
+            <a ng-click="logout()" class="nav_logout">Kirjaudu ulos</a>
+        </div>
 </div>

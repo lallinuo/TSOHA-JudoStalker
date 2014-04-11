@@ -21,8 +21,8 @@ public class DBYhdistaja {
 
     public Connection yhdista() throws SQLException {
         Connection connection = null;
-//        connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "tsoha2014");
-        connection = DriverManager.getConnection("jdbc:postgresql://ec2-54-204-32-91.compute-1.amazonaws.com:5432/d8qcgq67k5a5u1", "onmzifautaqinx", "SGrD5AD-XARG6cDPW4XQef89eT");
+        connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "tsoha2014");
+//        connection = DriverManager.getConnection("jdbc:postgresql://ec2-54-204-32-91.compute-1.amazonaws.com:5432/d8qcgq67k5a5u1", "onmzifautaqinx", "SGrD5AD-XARG6cDPW4XQef89eT");
         return connection;
     }
 }

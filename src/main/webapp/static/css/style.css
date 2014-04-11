@@ -1,25 +1,73 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
 .error{
     color: red;
 }
 .success{
     color: green;
 }
-#nav{
-    background-color: lightblue;
+
+.heading{
+    text-align: center;
 }
+#nav{
+    overflow: auto;
+    padding-bottom: 10px;
+    margin-top: 0px;
+    padding:top 0px;
+    width: 100%;
+    font-family: 'Exo', sans-serif;
+    background-color: #000;
+}
+
+
+#logo {
+    margin: 0px;
+    padding-top: 20px;
+    margin-left: 15px;
+    color:white;
+}
+
+#nav a{
+    text-align: center;
+    float: left;
+    margin-left: 20px;
+    text-decoration: none;
+    color: white;
+}
+
 body{
     background-color: #FFF;
 }
 
-
 a{
     cursor: pointer;
-    color: blue;
     text-decoration:underline;
 }
 h1{
-    color: #414141;
+    color: black;
+}
+
+#judokahaku{
     text-align: center;
+}
+
+#judokatable a{
+    color:black;
+}
+
+#judokatable tr:nth-child(even){
+    background-color:#E3E3E3;
+}
+#judokatable thead{
+    background-color:black;
+}
+#judokatable thead a{
+    font-family: 'Times New Roman';
+    text-decoration:none;
+    color:white;
 }
 p{
     color: #414141;

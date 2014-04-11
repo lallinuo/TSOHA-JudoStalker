@@ -4,6 +4,7 @@
     <head>
         <title>Home</title>
     </head>
+<link href='http://fonts.googleapis.com/css?family=Exo:500' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/style.css" type="text/css" /> 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/pure-min.css" type="text/css" /> 
     <script src= "${pageContext.request.contextPath}/static/js/angular.min.js"></script>
