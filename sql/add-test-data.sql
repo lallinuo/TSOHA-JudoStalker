@@ -8,7 +8,6 @@ INSERT INTO Judoka(etunimi,sukunimi,painoluokka,sukupuoli,maa) values('Musta','B
 INSERT INTO Judoka(etunimi,sukunimi,painoluokka,sukupuoli,maa) values('Sikko','Kaewasa','-73kg','Mies','Suomi');
 INSERT INTO Judoka(etunimi,sukunimi,painoluokka,sukupuoli,maa) values('Ilias','Iliadis','-90kg','Mies','Kreikka');
 INSERT INTO Judoka(etunimi,sukunimi,painoluokka,sukupuoli,maa) values('Magomed','Magomedov','-81kg','Mies','Venäjä');
-INSERT INTO Judoka(etunimi,sukunimi,painoluokka,sukupuoli,maa) values('Tele','Tappi','-52kg','Nainen','Teletappimaa');
 INSERT INTO Judoka(etunimi,sukunimi,painoluokka,sukupuoli,maa) values('Harry','Potter','-66kg','Mies','Tylypahka');
 INSERT INTO Judoka(etunimi,sukunimi,painoluokka,sukupuoli,maa) values('Martti','Puumalainen','-90kg','Mies','Suomi');
 INSERT INTO Judoka(etunimi,sukunimi,painoluokka,sukupuoli,maa) values('Toshihiko','Koga','-66kg','Mies','Japani');
